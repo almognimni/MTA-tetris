@@ -2,13 +2,15 @@
 
 
 
-Tetrominoes::Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]) {
-    this->blocks = blocks;
+Tetrominoes::Tetrominoes(Block _blocks[BLOCKS_IN_SHAPE]) {
+    for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
+        this->blocks[i] = _blocks[i];
+    }
 }
 
 Tetrominoes::Tetrominoes(Tetrominoes& other) {
     for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
-        this->blocks[i] = Block(other->blocks[i]);
+        this->blocks[i] = Block(other.blocks[i]);
     }
 }
 

@@ -63,6 +63,7 @@ private:
 public:
     Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]);
     Tetrominoes(Tetrominoes& other);
+    Tetrominoes(int arr[4][4], int midX);
     void lower();
     void moveRight();
     void moveLeft();
