@@ -1,4 +1,4 @@
-#include "general.h"
+#include "General.h"
 #include <windows.h> // for gotoxy
 #include <process.h> // for system
 #include <iostream>

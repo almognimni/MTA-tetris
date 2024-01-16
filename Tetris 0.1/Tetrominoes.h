@@ -1,7 +1,8 @@
-#ifndef TETROMINOES_H
-#define TETROMINOES_H
+#ifndef __TETROMINOES_H
+#define __TETROMINOES_H
 
 #include "Block.h"
+#include <cstdlib>  // for rand()
 
 #define BLOCKS_IN_SHAPE 4
 #define MAX_SHAPE_ROTATIONS 4
@@ -62,8 +63,9 @@ private:
 
 public:
     Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]);
-    Tetrominoes(Tetrominoes& other);
+    Tetrominoes(const Tetrominoes& other);
     Tetrominoes(int arr[4][4], int midX);
+    Tetrominoes(); //I need you to build Empty con that use random to give me shape
     void lower();
     void moveRight();
     void moveLeft();
@@ -71,8 +73,11 @@ public:
     bool isOverlapping(int x, int y);
 
 public:
-    static Tetrominoes[MAX_SHAPE_ROTATIONS] generateShapeRotations(ShapeType type);
+
+    //you need to check the signature of the function
+
+    static Tetrominoes[MAX_SHAPE_ROTATIONS] generateShapeRotations(ShapeType type); 
 };
 
 
-#endif // !TETROMINOES_H
+#endif // !__TETROMINOES_H

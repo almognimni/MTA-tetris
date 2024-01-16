@@ -8,7 +8,7 @@ Tetrominoes::Tetrominoes(Block _blocks[BLOCKS_IN_SHAPE]) {
     }
 }
 
-Tetrominoes::Tetrominoes(Tetrominoes& other) {
+Tetrominoes::Tetrominoes(const Tetrominoes& other) {
     for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
         this->blocks[i] = Block(other.blocks[i]);
     }
@@ -40,6 +40,10 @@ Tetrominoes::Tetrominoes(int arr[4][4], int midX) {
     }
 }
 
+Tetrominoes::Tetrominoes() {
+    int randomType = rand() % 7;  // There are 7 shape types
+//need to create a shape
+}
 void Tetrominoes::lower() {
     for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
         this->blocks[i].lower();
@@ -78,6 +82,7 @@ bool Tetrominoes::isOverlapping(int x, int y) {
     return false;
 }
 
+//you need to check the signature of the function
 static Tetrominoes[MAX_SHAPE_ROTATIONS] Tetrominoes::generateShapeRotations(ShapeType type, int xStart) {
     Tetrominoes rotations[MAX_SHAPE_ROTATIONS];
     Block blocks[4];

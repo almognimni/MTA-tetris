@@ -5,7 +5,11 @@ Block::Block() {
 	this->y = 0;
 }
 
-Block::Block(Block& other) {
+Block::Block(int x,int y) {
+	this->x = x;
+	this->y = y;
+}
+Block::Block(const Block& other) {
     this->x = other.x;
     this->y = other.y;
 }

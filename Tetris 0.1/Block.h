@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __BLOCK_H
+#define __BLOCK_H
+
 
 class Block {
     int x;
@@ -7,7 +9,7 @@ class Block {
 public:
     Block();
     Block(int x, int y);
-    Block(Block& other);
+    Block(const Block& other);
     void lower();
     void moveRight();
     void moveLeft();
@@ -17,5 +19,8 @@ public:
     bool isEquals(Block& other);
     bool isOverlapping(int x, int y);
     bool isOverlapping(Block& other);
+
+    
 };
 
+#endif

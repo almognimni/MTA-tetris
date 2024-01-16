@@ -11,23 +11,23 @@
 using namespace std;
 
 
-void TetrisGame::drawBorder()
+void TetrisGame::drawBorderForBoard()
 {
-	for (int col = GameConfig::MIN_X; col < GameConfig::GAME_WIDTH + GameConfig::MIN_X; col++)
+	for (int col = GameConfig::MIN_X_BOARD_1; col < GameConfig::GAME_WIDTH + GameConfig::MIN_X_BOARD_1; col++)
 	{
-		gotoxy(col, GameConfig::MIN_Y - 1);
+		gotoxy(col, GameConfig::MIN_Y_BOARD_1 - 1);
 		cout << "-";
 
-		gotoxy(col, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y);
+		gotoxy(col, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1);
 		cout << "-";
 	}
 
-	for (int row = GameConfig::MIN_Y - 1; row <= GameConfig::GAME_HEIGHT + GameConfig::MIN_Y; row++)
+	for (int row = GameConfig::MIN_Y_BOARD_1 - 1; row <= GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1; row++)
 	{
-		gotoxy(GameConfig::MIN_X - 1, row);
+		gotoxy(GameConfig::MIN_Y_BOARD_1 - 1, row);
 		cout << "|";
 
-		gotoxy(GameConfig::GAME_WIDTH + GameConfig::MIN_X, row);
+		gotoxy(GameConfig::GAME_WIDTH + GameConfig::MIN_X_BOARD_1, row);
 		cout << "|";
 	}
 }

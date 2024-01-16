@@ -10,6 +10,6 @@ using namespace std;
 
 void main()
 {
-	TetrisGame::drawBorder();
-	gotoxy(0, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y + 2);
+	TetrisGame::drawBorderForBoard();
+	gotoxy(0, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1 + 2);
 }
