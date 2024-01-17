@@ -75,6 +75,10 @@ public:
     bool isOverlapping(int x, int y); //Handle by board
 
     int* getCurrentRotationPos(); //TODO
+
+    int GetBlockX(int blockNum);
+    int GetBlockY(int blockNum);
+    int getRotation();
    
 
 public: //Static functions that are related to tetrominoes

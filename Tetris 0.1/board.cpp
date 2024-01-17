@@ -48,5 +48,17 @@ void Board::printBlockInBoard(int x, int y)
 
 bool Board::isOverlapping(const Tetrominoes tetromino)
 {
-	for (const Block& block : tetromino
+	//int currentRotation = tetromino.getRotation(); -- **redundent**
+	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	{
+		int blockX = tetromino.GetBlockX(i);
+		int blockY = tetromino.GetBlockY(i);
+		if (this->gameBoard[blockX][blockY])
+		{
+			return true;
+		}
+	}
 }
+
+//Make "isTouching" function by the same principles
+//Make a place function by the same principles

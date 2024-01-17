@@ -220,29 +220,59 @@ void rotateMatrixClockwise(int matrix[4][4]) {
     }
 }
 
-//Will need to change those
+//Moves all rotations down
 void Tetrominoes::lower() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
-        this->blocks[i].lower();
+    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    {
+        for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+        {
+            this->rotations[i][j].lower();
+        }
     }
 }
 
+//Moves all rotations to the right
 void Tetrominoes::moveRight() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
-        this->blocks[i].moveRight();
+    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    {
+    for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+    {
+        this->rotations[i][j].moveRight();
+    }
+        
     }
 }
 
+//Moves all rotations to the left
 void Tetrominoes::moveLeft() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {
-        this->blocks[i].moveLeft();
+    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    {
+        for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+        {
+        this->rotations[i][j].moveLeft();
+        }
     }
 }
 
+int Tetrominoes::getRotation()
+{
+    return this->currentRotation;
+}
 
+int Tetrominoes::GetBlockX(int blockNum)
+{
+    return this->rotations[currentRotation][blockNum].getX();
+}
+
+int Tetrominoes::GetBlockY(int blockNum)
+{
+    return this->rotations[currentRotation][blockNum].getY();
+}
 
 
 /*
+Coilition functions will be implemented in the board class
+
 
 bool Tetrominoes::isTouching(int x, int y) {
     for (int i = 0; i < BLOCKS_IN_SHAPE; i++) {

@@ -17,6 +17,7 @@ When a piece is touching the ground - only the current rotation cordinates will 
 
 - [ ] Make a function that will give the location of the current rotation (maybe by 2 arrays, one for x one for y? / maybe 2x4 array of ints, xy cord for each block?)
 
+- [ ] Brainstorm with maor befor making further changes
 
 	**It seems that the board should check for the collitions**
 
