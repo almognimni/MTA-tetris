@@ -59,25 +59,38 @@ typedef enum {
 class Tetrominoes // Shape
 {
 private:
-	Block blocks[BLOCKS_IN_SHAPE];
+    //The refrence point for all the shape rotations
+    int middleX, middleY;
+    // An array of all rotations of the tetromino.
+    // Each rotation is represented as an array of Blocks.
+    Block** rotations;
+    int currentRotation;
 
 public:
-    Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]);
-    Tetrominoes(const Tetrominoes& other);
-    Tetrominoes(int arr[4][4], int midX);
-    Tetrominoes(); //I need you to build Empty con that use random to give me shape
+    Tetrominoes();
     void lower();
     void moveRight();
     void moveLeft();
     bool isTouching(int x, int y);
-    bool isOverlapping(int x, int y);
+    bool isOverlapping(int x, int y); //Handle by board
 
-public:
+    int* getCurrentRotationPos(); //TODO
+   
 
-    //you need to check the signature of the function
+public: //Static functions that are related to tetrominoes
+    static Block* createRotation(int arr[4][4], int midX);
+    static void rotateMatrixClockwise(int matrix[4][4]);
 
-    static Tetrominoes[MAX_SHAPE_ROTATIONS] generateShapeRotations(ShapeType type); 
 };
 
 
 #endif // !__TETROMINOES_H
+
+/*
+functions graveyard:
+    Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]);
+    Tetrominoes(const Tetrominoes& other);
+    Tetrominoes(int arr[4][4], int midX);
+ static Tetrominoes[MAX_SHAPE_ROTATIONS] generateShapeRotations(ShapeType type); 
+
+*/

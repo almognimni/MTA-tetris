@@ -2,6 +2,8 @@
 #define __BOARD_H
 
 #include "gameConfig.h"
+#include "Tetrominoes.h"
+
 class Board
 {
 private:
@@ -18,7 +20,33 @@ public:
 	Board();
 	void deleteLine(int numOfLineFromTheBottom);
 	void printBlockInBoard(int x, int y);
+	
+	bool isOverlapping(const Tetrominoes tetromino);
+	bool isPlaced(const Tetrominoes tetromino);
 
 };
 
 #endif
+
+/*
+Example for colition check by the board (will need to first make get functions to get cordinates to check from):
+
+bool Board::isOverlapping(const Tetromino& tetromino)
+{
+    for (const Block& block : tetromino.blocks)
+    {
+        if (block.x < 0 || block.x >= BOARD_SIZE || block.y < 0 || block.y >= BOARD_SIZE)
+        {
+            // Out of bounds
+            return true;
+        }
+        if (gameBoard[block.x][block.y])
+        {
+            // Position on the board is occupied
+            return true;
+        }
+    }
+    // No overlaps found
+    return false;
+
+*/

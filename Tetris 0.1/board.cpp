@@ -45,3 +45,8 @@ void Board::printBlockInBoard(int x, int y)
 	gotoxy(x, y);
 	cout << '*';
 }
+
+bool Board::isOverlapping(const Tetrominoes tetromino)
+{
+	for (const Block& block : tetromino
+}

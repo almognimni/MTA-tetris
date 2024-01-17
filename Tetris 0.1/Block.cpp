@@ -1,4 +1,5 @@
 #include "Block.h"
+#include "board.h"
 
 Block::Block() {
 	this->x = 0;
@@ -9,10 +10,9 @@ Block::Block(int x,int y) {
 	this->x = x;
 	this->y = y;
 }
-Block::Block(const Block& other) {
-    this->x = other.x;
-    this->y = other.y;
-}
+
+int Block::getX() { return this->x; }
+int Block::getY() { return this->y; }
 
 void Block::lower()
 {
@@ -51,6 +51,14 @@ void Block::moveLeft()
 	this->x--;
 }
 
+
+/*
+Block::Block(const Block& other) {
+    this->x = other.x;
+    this->y = other.y;
+}
+
+
 bool Block::isTouching(int _x, int _y)
 {
 	if (this->x - 1 == _x)
@@ -87,3 +95,15 @@ bool Block::isOverlapping(Block& other)
 	return (this->x == other.x && this->y == other.y);
 }
 
+bool Block::isOverlapping(&Board::gameBoard board)
+{
+    if (this->x < 0 || this->x >= board.size() || this->y < 0 || this->y >= board[0].size())
+    {
+        // Out of bounds
+        return true;
+    }
+    return board[this->x][this->y];
+}
+
+
+*/
