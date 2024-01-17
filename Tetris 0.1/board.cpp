@@ -26,7 +26,7 @@ void Board::swapLineFalse(int firstLineFromBottom, int secondLineFromBottom)
 		this->gameBoard[secondLineFromBottom][i] = temp;
 	}
 }
-
+//int from start and add min_x_Board   17_1
 void Board::clearLineChar(int numOfLineFromTheBottom)
 {
 /* this code depned on what i get for location in the board - NEED TO DO
@@ -40,13 +40,13 @@ void Board::swapLineChar(int firstLineFromBottom, int secondLineFromBottom)
 		*/
 }
 
-void Board::printBlockInBoard(int x, int y)
+void Board::printBlockInBoard(Block curBlock) 
 {
-	gotoxy(x, y);
+	gotoxy(curBlock.getX(), curBlock.getY());
 	cout << '*';
 }
 
-bool Board::isOverlapping(const Tetrominoes tetromino)
+bool Board::isOverlapping(const Tetrominoes& tetromino)
 {
 	//int currentRotation = tetromino.getRotation(); -- **redundent**
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)

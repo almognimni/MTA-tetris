@@ -21,3 +21,9 @@ When a piece is touching the ground - only the current rotation cordinates will 
 
 	**It seems that the board should check for the collitions**
 
+	Tasks after meeting with maor:
+- [ ] Collition checks in board
+- [ ] collition check for next rotation
+- [ ] rotate function
+- [ ] place tetromino on board
+- [ ] check 

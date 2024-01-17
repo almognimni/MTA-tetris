@@ -194,15 +194,16 @@ Tetrominoes::Tetrominoes() {
     }
 }
 
-int* Tetrominoes::getCurrentRotationPos() //TODO
+/*
+int* Tetrominoes::getCurrentRotationPos() //*******TODO*******
 {
-    
+    block[] 
     for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
     {
-        rotations[currentRotation][i].getX;
+        rotations[currentRotation][i].getX();
     }
 }
-
+*/
 
 void rotateMatrixClockwise(int matrix[4][4]) {
     for (int i = 0; i < 4 / 2; i++) {

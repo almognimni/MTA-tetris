@@ -63,7 +63,7 @@ private:
     int middleX, middleY;
     // An array of all rotations of the tetromino.
     // Each rotation is represented as an array of Blocks.
-    Block** rotations;
+    Block** rotations;  //00 10 20 11
     int currentRotation;
 
 public:

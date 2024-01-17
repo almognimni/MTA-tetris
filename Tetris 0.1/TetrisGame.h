@@ -27,10 +27,16 @@ public:
 		cout << "Tetris" << "\n" << "Welcome to the Tetris game" << endl;
 		cout << "Menu:" << endl;
 		cout << "(1) Start a new game" << endl;
-		cout << "(8) Present instructions and keys" << endl;
-		cout << "(9) EXIT" << endl;
 		if (IsGamePaused == true)
 			cout << "(2) Continue a paused game" << endl;
+		cout << "(8) Present instructions and keys" << endl;
+		cout << "(9) EXIT" << endl;
+	
+		
+		
+//bool IsVaildChoice = false;
+//	while(IsVaildChoice!=true)
+	//{
 		cout << "Enter your choice: ";
 		cin >> userChoice;
 
@@ -49,11 +55,12 @@ public:
 			// Handle exiting the game
 			break;
 		default:
+		//	IsVaildChoice=true;
 			// Handle invalid choice
 			break;
 		}
-	
-	}
+	//}
+	//}
 	void startGame()
 	{
 		clrscr(); //make empty screen

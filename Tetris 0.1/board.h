@@ -3,12 +3,15 @@
 
 #include "gameConfig.h"
 #include "Tetrominoes.h"
+#include "Block.h"
 
 class Board
 {
-private:
+public:
 	//A board that contains truth values in the places/blocks occupied by shapes on the board
 	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH] = { };
+
+private:
 
 
 
@@ -17,11 +20,11 @@ private:
 	void swapLineFalse(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
 	void swapLineChar(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
 public:
-	Board();
+    Board() {};
 	void deleteLine(int numOfLineFromTheBottom);
-	void printBlockInBoard(int x, int y);
+	void printBlockInBoard(Block curBlock);
 	
-	bool isOverlapping(const Tetrominoes tetromino);
+	bool isOverlapping(const Tetrominoes& tetromino);
 	bool isPlaced(const Tetrominoes tetromino);
 
 };
