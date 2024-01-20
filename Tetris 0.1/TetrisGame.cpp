@@ -89,8 +89,7 @@ void TetrisGame::startGame()
 
 	while (p1.isAlive() && p2.isAlive())
 	{
-		p1.generateTetromino();
-		p2.generateTetromino();
+		p1.myPlayerBoard
 
 
 	}

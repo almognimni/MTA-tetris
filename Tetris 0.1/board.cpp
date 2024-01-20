@@ -64,5 +64,10 @@ bool Board::isOverlapping(const Tetrominoes& tetromino) const //19_01_24 maor ma
 	return false;
 }
 
+void Board::generateTetromino()
+{
+	this->currentShape = Tetrominoes::Tetrominoes();
+}
+
 //Make "isTouching" function by the same principles
 //Make a place function by the same principles
