@@ -9,4 +9,5 @@
 void gotoxy(int, int);
 void clrscr();
 
+
 #endif // __GENERAL_H

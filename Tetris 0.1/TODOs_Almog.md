@@ -22,8 +22,11 @@ When a piece is touching the ground - only the current rotation cordinates will 
 	**It seems that the board should check for the collitions**
 
 	Tasks after meeting with maor:
-- [ ] Collition checks in board
-- [ ] collition check for next rotation
+- [x] Collition checks in board
 - [ ] rotate function
+- [ ] collition check for next rotation
 - [ ] place tetromino on board
-- [ ] check 
+
+- [x] dynamiclly allocate the blocks array
+- [ ] replace "define" with const
+- [x] Make a tetrmonio destructor

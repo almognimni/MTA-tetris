@@ -55,6 +55,13 @@ typedef enum {
     ReverseZShape,
 } ShapeType;
 
+typedef enum
+{
+    currentRotation = 0,
+    nextRotation = 1,
+    PrevRotation = 2,
+} rotationType;
+
 
 class Tetrominoes // Shape
 {
@@ -67,10 +74,14 @@ private:
     int currentRotation;
 
 public:
-   // Tetrominoes(); 19/01/24 need to correct this function
+    Tetrominoes();
+    ~Tetrominoes();
     void lower();
     void moveRight();
     void moveLeft();
+    void rotateClockwise();
+    void rotateCounterClockwise();
+
     bool isTouching(int x, int y);
     bool isOverlapping(int x, int y); //Handle by board
 

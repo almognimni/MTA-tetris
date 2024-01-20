@@ -24,7 +24,7 @@ public:
     Board() {};
 	void deleteLine(int numOfLineFromTheBottom);
 	void printBlockInBoard(Block curBlock);
-	bool isOverlapping(const Tetrominoes& tetromino) const;  //19_01_24 maor made some changes in the cpp 
+	bool isOverlapping(const Tetrominoes& tetromino) const;
 	bool isPlaced(const Tetrominoes tetromino);
     bool GetGameBoardValue(int x, int y) const; //19/01/24
 };

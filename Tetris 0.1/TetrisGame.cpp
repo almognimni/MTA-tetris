@@ -62,6 +62,7 @@ void TetrisGame::showMenu() const
 	}
 }
 
+/*
 void TetrisGame::startGame()
 {
 	clrscr(); //make empty screen
@@ -76,5 +77,22 @@ void TetrisGame::startGame()
 	//}
 
 	//Player p2;
+}
+*/
+
+void TetrisGame::startGame()
+{
+	clrscr(); //make empty screen
+	drawBorderForBoard(); //Need to draw for both players
+	Player p1;
+	Player p2;
+
+	while (p1.isAlive() && p2.isAlive())
+	{
+		p1.generateTetromino();
+		p2.generateTetromino();
+
+
+	}
 }
 

@@ -47,13 +47,13 @@ Tetrominoes::Tetrominoes(const Tetrominoes& other) {
         */
 
 //Function will take an 4x4 matrix representing a shape and a starting point and will create an array of 4 blocks representing it
-Block* createRotation(int arr[4][4], int midX) {
-    Block rotation[BLOCKS_IN_SHAPE];
+Block* Tetrominoes::createRotation(int arr[4][4], int midX) {
+    Block* rotation = new Block[BLOCKS_IN_SHAPE];
     int i = 0;
 
-    for (int row = 0; row < BLOCKS_IN_SHAPE && i < BLOCKS_IN_SHAPE; row++)
+    for (int row = 0; row < BLOCKS_IN_SHAPE; row++)
     {
-        for (int col = 0; col < BLOCKS_IN_SHAPE && i< BLOCKS_IN_SHAPE; col++)
+        for (int col = 0; col < BLOCKS_IN_SHAPE; col++)
         {
             if (i >= BLOCKS_IN_SHAPE)
                 return rotation;
@@ -66,10 +66,12 @@ Block* createRotation(int arr[4][4], int midX) {
         }
     }
     return rotation;
-} 
-/* 19/01/24 need to correct the function for using */
+}
+//TODO - free the memory after a shape has been placed on the board
+//Create a free function that will free the rotations of a shape
 
-Tetrominoes::Tetrominoes() {
+Tetrominoes::Tetrominoes()
+{
     ShapeType shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
     currentRotation = 0;
 
@@ -163,7 +165,7 @@ Tetrominoes::Tetrominoes() {
         rotations[0] = createRotation(rL, middleX);
         for (int i = 1; i < 4; i++)
         {
-            rotateMatrixClockwise(L);
+            rotateMatrixClockwise(rL);
             rotations[i] = createRotation(rL, middleX);
         }
 
@@ -198,11 +200,12 @@ Tetrominoes::Tetrominoes() {
         rotations[0] = createRotation(rZ, middleX);
         rotations[2] = rotations[0];
 
-        rotateMatrixClockwise(Z);
+        rotateMatrixClockwise(rZ);
         rotations[1] = createRotation(rZ, middleX);
         rotations[3] = rotations[1];
 
         break;
+    }
     }
 }
 
@@ -217,9 +220,12 @@ int* Tetrominoes::getCurrentRotationPos() //*******TODO*******
 }
 */
 
-void rotateMatrixClockwise(int matrix[4][4]) {
-    for (int i = 0; i < 4 / 2; i++) {
-        for (int j = i; j < 4 - i - 1; j++) {
+void Tetrominoes::rotateMatrixClockwise(int matrix[4][4])
+{
+    for (int i = 0; i < 4 / 2; i++)
+    {
+        for (int j = i; j < 4 - i - 1; j++)
+        {
             int temp = matrix[i][j];
             // Move values from left to top
             matrix[i][j] = matrix[4 - 1 - j][i];
@@ -267,6 +273,18 @@ void Tetrominoes::moveLeft() {
     }
 }
 
+//Rotate the shape clockwise
+void Tetrominoes::rotateClockwise()
+{
+	this->currentRotation = (this->currentRotation + 1) % MAX_SHAPE_ROTATIONS;
+}
+
+//Rotate the shape counter-clockwise
+void Tetrominoes::rotateCounterClockwise()
+{
+	this->currentRotation = (this->currentRotation - 1) % MAX_SHAPE_ROTATIONS;
+}
+
 int Tetrominoes::getRotation() const
 {
     return this->currentRotation;
@@ -280,6 +298,15 @@ int Tetrominoes::GetBlockX(int blockNum) const
 int Tetrominoes::GetBlockY(int blockNum) const
 {
     return this->rotations[currentRotation][blockNum].getY();
+}
+
+ Tetrominoes::~Tetrominoes()
+{
+    for (int i = 0; i < MAX_SHAPE_ROTATIONS; i++)
+    {
+		delete[] rotations[i];
+	}
+	delete[] rotations;
 }
 
 
