@@ -1,7 +1,5 @@
 #include "Board.h"
-#include "gameConfig.h"
-#include "General.h"
-#include <iostream> 
+
 
 using std::cout;
 using std::cin;
@@ -46,18 +44,24 @@ void Board::printBlockInBoard(Block curBlock)
 	cout << '*';
 }
 
-bool Board::isOverlapping(const Tetrominoes& tetromino)
+bool Board::GetGameBoardValue(int x, int y) const
+{
+	return this->gameBoard[x][y];
+}
+
+bool Board::isOverlapping(const Tetrominoes& tetromino) const //19_01_24 maor made some changes in the h and cpp
 {
 	//int currentRotation = tetromino.getRotation(); -- **redundent**
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
 		int blockX = tetromino.GetBlockX(i);
-		int blockY = tetromino.GetBlockY(i);
+		int blockY = tetromino.GetBlockY(i); //19/01/24 change GETBLOCK  to const function
 		if (this->gameBoard[blockX][blockY])
 		{
 			return true;
 		}
 	}
+	return false;
 }
 
 //Make "isTouching" function by the same principles

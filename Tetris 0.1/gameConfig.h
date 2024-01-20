@@ -1,5 +1,6 @@
 #ifndef __GAME_CONFIG_H
 #define __GAME_CONFIG_H
+#include <Windows.h>
 
 class GameConfig
 {

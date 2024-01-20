@@ -67,7 +67,7 @@ private:
     int currentRotation;
 
 public:
-    Tetrominoes();
+   // Tetrominoes(); 19/01/24 need to correct this function
     void lower();
     void moveRight();
     void moveLeft();
@@ -76,9 +76,9 @@ public:
 
     int* getCurrentRotationPos(); //TODO
 
-    int GetBlockX(int blockNum);
-    int GetBlockY(int blockNum);
-    int getRotation();
+    int GetBlockX(int blockNum) const;          //19/01/24 add const to getblocks
+    int GetBlockY(int blockNum) const;
+    int getRotation() const;
    
 
 public: //Static functions that are related to tetrominoes

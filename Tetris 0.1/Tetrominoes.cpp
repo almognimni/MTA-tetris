@@ -1,5 +1,4 @@
 #include "Tetrominoes.h"
-#include <cstdlib>
 
 
 /*
@@ -52,43 +51,47 @@ Block* createRotation(int arr[4][4], int midX) {
     Block rotation[BLOCKS_IN_SHAPE];
     int i = 0;
 
-    for (int row = 0; row < BLOCKS_IN_SHAPE; row++)
+    for (int row = 0; row < BLOCKS_IN_SHAPE && i < BLOCKS_IN_SHAPE; row++)
     {
-        for (int col = 0; col < BLOCKS_IN_SHAPE; col++)
+        for (int col = 0; col < BLOCKS_IN_SHAPE && i< BLOCKS_IN_SHAPE; col++)
         {
             if (i >= BLOCKS_IN_SHAPE)
-                return;
+                return rotation;
 
             if (arr[row][col] == 1)
-            {
+            {          
                 rotation[i] = Block(midX - 1 + col, row);
                 i++;
             }
         }
     }
     return rotation;
-}
+} 
+/* 19/01/24 need to correct the function for using */
 
 Tetrominoes::Tetrominoes() {
-    ShapeType shapeType = rand() % 7;
+    ShapeType shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
     currentRotation = 0;
 
     switch (shapeType)
     {
     case ShapeType::SquereShape:
+    {
         int square[4][4] = {
             {0,1,1,0},
             {0,1,1,0},
             {0,0,0,0},
             {0,0,0,0}
         };
-
         for (int i = 0; i < MAX_SHAPE_ROTATIONS; i++) {
             rotations[i] = createRotation(square, middleX);
         }
         break;
+    }
 
     case ShapeType::LineShape:
+    {
+
         int line1[4][4] = {
             {1,1,1,1},
             {0,0,0,0},
@@ -108,8 +111,10 @@ Tetrominoes::Tetrominoes() {
         rotations[3] = rotations[1];
 
         break;
+    }
 
     case ShapeType::TShape:
+    {
         int T[4][4] = {
             {1,1,1,0},
             {0,1,0,0},
@@ -125,8 +130,10 @@ Tetrominoes::Tetrominoes() {
         }
 
         break;
+    }
 
     case ShapeType::LShape:
+    {
         int L[4][4] = {
             {1,0,0,0},
             {1,0,0,0},
@@ -142,8 +149,10 @@ Tetrominoes::Tetrominoes() {
         }
 
         break;
+    }
 
     case ShapeType::ReverseLShape:
+    {
         int rL[4][4] = {
             {0,0,0,1},
             {0,0,0,1},
@@ -159,8 +168,9 @@ Tetrominoes::Tetrominoes() {
         }
 
         break;
-
+    }
     case ShapeType::ZShape:
+    {
         int Z[4][4] = {
             {1,1,0,0},
             {0,1,1,0},
@@ -175,8 +185,10 @@ Tetrominoes::Tetrominoes() {
         rotations[3] = rotations[1];
 
         break;
+    }
 
     case ShapeType::ReverseZShape:
+    {
         int rZ[4][4] = {
             {0,1,1,0},
             {1,1,0,0},
@@ -255,17 +267,17 @@ void Tetrominoes::moveLeft() {
     }
 }
 
-int Tetrominoes::getRotation()
+int Tetrominoes::getRotation() const
 {
     return this->currentRotation;
 }
 
-int Tetrominoes::GetBlockX(int blockNum)
+int Tetrominoes::GetBlockX(int blockNum) const
 {
     return this->rotations[currentRotation][blockNum].getX();
 }
 
-int Tetrominoes::GetBlockY(int blockNum)
+int Tetrominoes::GetBlockY(int blockNum) const
 {
     return this->rotations[currentRotation][blockNum].getY();
 }

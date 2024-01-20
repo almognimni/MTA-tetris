@@ -1,5 +1,4 @@
 #include "Block.h"
-#include "board.h"
 
 Block::Block() {
 	this->x = 0;
@@ -11,8 +10,8 @@ Block::Block(int x,int y) {
 	this->y = y;
 }
 
-int Block::getX() { return this->x; }
-int Block::getY() { return this->y; }
+int Block::getX() const { return this->x; }
+int Block::getY() const { return this->y; }
 
 void Block::lower()
 {

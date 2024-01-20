@@ -13,8 +13,8 @@ public:
     void lower();
     void moveRight();
     void moveLeft();
-    int getX();
-    int getY();
+    int getX() const;
+    int getY() const;
 
 };
 
