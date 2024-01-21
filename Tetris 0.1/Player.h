@@ -8,16 +8,17 @@ class Player
 {
 private:
 	bool alive;
-	Tetrominoes currentTetromino;
-
+	//Tetrominoes currentTetromino;
 public:
+	Board myPlayerBoard; // Check how to make private
+
+
 	Player() : myPlayerBoard(), alive(true){}; // אני לא בטוח איך לבנות את הלוח מבחינת הקצאה וכדומה
 	Player(const Player& other) = delete; // What is this?
 	bool isAlive() const { return alive; }
-	void generateTetromino();
+//	void generateTetromino();
 
 
-	Board myPlayerBoard; // Check how to make private
 };
 
 #endif

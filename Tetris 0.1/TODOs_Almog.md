@@ -30,3 +30,24 @@ When a piece is touching the ground - only the current rotation cordinates will 
 - [x] dynamiclly allocate the blocks array
 - [ ] replace "define" with const
 - [x] Make a tetrmonio destructor
+- [ ] Make some tetromino functions private
+
+20/01
+- [ ] 
+- [ ] 
+- [ ] 
+
+
+21/01 changes:
+- [x] consider not requiering "Tetromino" parameter in the board functions (it has it in the class) 
+
+
+Changed the isOverlapping to check for a specific direction (TODO - need to include rotations as well)
+Made "Place tetromino function"
+Made "MoveCurrentShape" function on board (includes checking and printing) and returns true if placed
+Changed the board functions that operates on tetrominoes to use this instead of parameter
+Working on game loop
+
+
+
+

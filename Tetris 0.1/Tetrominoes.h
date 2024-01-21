@@ -67,7 +67,7 @@ class Tetrominoes // Shape
 {
 private:
     //The refrence point for all the shape rotations
-    int middleX, middleY;
+    int middleX = 6, middleY = 0;
     // An array of all rotations of the tetromino.
     // Each rotation is represented as an array of Blocks.
     Block** rotations;  //00 10 20 11
@@ -82,13 +82,11 @@ public:
     void rotateClockwise();
     void rotateCounterClockwise();
 
-    bool isTouching(int x, int y);
-    bool isOverlapping(int x, int y); //Handle by board
+    //bool isTouching(int x, int y);
+    //bool isOverlapping(int x, int y); //Handle by board
 
-    int* getCurrentRotationPos(); //TODO
-
-    int GetBlockX(int blockNum) const;          //19/01/24 add const to getblocks
-    int GetBlockY(int blockNum) const;
+    int GetBlockX(int blockNum, int rotation = 0) const; //rotation can be -1 or 1 for prev or next
+    int GetBlockY(int blockNum, int rotation = 0) const;
     int getRotation() const;
    
 

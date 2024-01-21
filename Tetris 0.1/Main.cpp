@@ -3,7 +3,12 @@
 
 int main()
 {
-	//TetrisGame::drawBorder();
-	//gotoxy(0, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y + 2);
+
+	TetrisGame Game;
+	gotoxy(0, 0);
+	Game.showMenu();
+	
+	
+	gotoxy(0, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1 + 2);
 	return 0;
 }

@@ -4,38 +4,77 @@
 using std::cout;
 using std::cin;
 
+void Board::deleteLine(int indexOfLineFromTop)
+{
+	clearLineChar(indexOfLineFromTop);
+	makeLineFalse(indexOfLineFromTop);
+	while (indexOfLineFromTop >= 1)
+	{
+		swapLineFalse(indexOfLineFromTop, indexOfLineFromTop - 1);
+		indexOfLineFromTop--;
+	}
+}
 
-void Board::makeLineFalse(int numOfLineFromTheBottom)
+bool Board::IsLineFull(int line)
+{
+	int j;
+	for ( j = 0; j < GameConfig::GAME_WIDTH; j++)
+	{
+		if (this->gameBoard[line][j] == 0)
+			return false;
+	}
+	return true;
+}
+void Board::makeLineFalse(int indexOfLineFromTop)
 {
 	int i = 0;
 	for ( i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
-		this->gameBoard[numOfLineFromTheBottom][i] = false;
+		this->gameBoard[indexOfLineFromTop][i] = false;
 	}
 }
 
-void Board::swapLineFalse(int firstLineFromBottom, int secondLineFromBottom)
+void Board::swapLineFalse(int firstLineFromTop, int secondLineFromTop)
 {
-	int i = 0, temp;
+	int i = 0;
+	bool temp;
 	for (i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
-		temp=this->gameBoard[firstLineFromBottom][i];
-		this->gameBoard[firstLineFromBottom][i] = this->gameBoard[secondLineFromBottom][i];
-		this->gameBoard[secondLineFromBottom][i] = temp;
+		temp=this->gameBoard[firstLineFromTop][i];
+		this->gameBoard[firstLineFromTop][i] = this->gameBoard[secondLineFromTop][i];
+		this->gameBoard[secondLineFromTop][i] = temp;
 	}
+	printTheSwap(firstLineFromTop, secondLineFromTop);
 }
 //int from start and add min_x_Board   17_1
-void Board::clearLineChar(int numOfLineFromTheBottom)
+void Board::clearLineChar(int indexOfLineFromTop)
 {
-/* this code depned on what i get for location in the board - NEED TO DO
+    /* this code depned on what i get for location in the board - NEED TO DO
 	gotoxy(numOfLineFromTheBottom + GameConfig::MIN_X_BOARD_1)
 	*/
+	gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + indexOfLineFromTop);
+	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
+	{
+		cout << ' ';
+	}
 }
-void Board::swapLineChar(int firstLineFromBottom, int secondLineFromBottom)
-{
-	/* this code depned on what i get for location in the board - NEED TO DO
-		gotoxy(numOfLineFromTheBottom + GameConfig::MIN_X_BOARD_1)
-		*/
+void Board::printTheSwap(int firstLineFromTop, int secondLineFromTop)
+{	
+	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
+	{
+		gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
+		if (this->gameBoard[firstLineFromTop][i] == true)
+			cout << (char)219;
+		else
+			cout << ' ';
+		gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
+		if (this->gameBoard[secondLineFromTop][i] == true)
+			cout << (char)219;
+		else
+			cout << ' ';
+
+
+	}
 }
 
 void Board::printBlockInBoard(Block curBlock) 
@@ -49,19 +88,55 @@ bool Board::GetGameBoardValue(int x, int y) const
 	return this->gameBoard[x][y];
 }
 
-bool Board::isOverlapping(const Tetrominoes& tetromino) const //19_01_24 maor made some changes in the h and cpp
+bool Board::isOverlapping(GameConfig::eKeys direction) const
 {
 	//int currentRotation = tetromino.getRotation(); -- **redundent**
+	
+	int difX = 0;
+	int difY = 0;
+	int difRot = 0;
+
+	switch (direction)
+	{
+	case GameConfig::eKeys::DROP:
+		difY++;
+		break;
+
+	case GameConfig::eKeys::RIGHT:
+		difX++;
+		break;
+
+	case GameConfig::eKeys::LEFT:
+		difX--;
+		break;
+	case GameConfig::eKeys::ROTATECLOCKWISE: //Need to continue
+
+	break;
+	}
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
-		int blockX = tetromino.GetBlockX(i);
-		int blockY = tetromino.GetBlockY(i); //19/01/24 change GETBLOCK  to const function
-		if (this->gameBoard[blockX][blockY])
-		{
+		int blockX = this->currentShape.GetBlockX(i) + difX;
+		int blockY = this->currentShape.GetBlockY(i) + difY;
+
+		if (blockX < 0 || blockX > GameConfig::GAME_WIDTH || blockY > GameConfig::GAME_HEIGHT)
 			return true;
-		}
+
+		if (this->gameBoard[blockX][blockY] == true)
+			return true;
 	}
 	return false;
+}
+
+void Board::printShape(char charOfShape) //Should we remove the shape parameter? WE JUST DIDDDDD
+{
+	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	{
+		int blockX = this->currentShape.GetBlockX(i);
+		int blockY = this->currentShape.GetBlockY(i);
+		gotoxy(GameConfig::MIN_X_BOARD_1 + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
+		cout << charOfShape;
+	}
+	
 }
 
 void Board::generateTetromino()
@@ -69,5 +144,50 @@ void Board::generateTetromino()
 	this->currentShape = Tetrominoes::Tetrominoes();
 }
 
-//Make "isTouching" function by the same principles
-//Make a place function by the same principles
+void Board::placeTetromino()
+{
+	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	{
+		int blockX = this->currentShape.GetBlockX(i);
+		int blockY = this->currentShape.GetBlockX(i);
+		this->gameBoard[blockX][blockY] = true;
+	}
+}
+
+bool Board::moveCurrentShape(GameConfig::eKeys direction)
+{
+	bool hasReachedGround = false;
+
+	if (this->isOverlapping(direction) == false) //Need to update for rotations
+	{
+		this->printShape(' ');
+		switch (direction)
+		{
+		case GameConfig::eKeys::DROP:
+			this->currentShape.lower();
+			break;
+		case GameConfig::eKeys::RIGHT:
+			this->currentShape.moveRight();
+			break;
+		case GameConfig::eKeys::LEFT:
+			this->currentShape.moveLeft();
+			break;
+		
+		case GameConfig::eKeys::ROTATECLOCKWISE:
+			this->currentShape.rotateClockwise();
+			break;
+
+		case GameConfig::eKeys::ROTATECOUNTERCLOCKWISE:
+			this->currentShape.rotateCounterClockwise();
+			break;
+		}
+		this->printShape((char)219);
+	}
+
+	else if (direction == GameConfig::eKeys::DROP)
+	{
+		hasReachedGround = true;
+		placeTetromino();
+	}
+	return hasReachedGround;
+}

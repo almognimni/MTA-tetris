@@ -10,27 +10,28 @@ class Board
 {
 public:
 	//A board that contains truth values in the places/blocks occupied by shapes on the board
-	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH] = { };
+	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];
     Tetrominoes currentShape;
-
 private:
 
 
-
-	void makeLineFalse(int numOfLineFromTheBottom);//make the whole line in the board[][] false
-	void clearLineChar(int numOfLineFromTheBottom);//make the line empty in the board printing
-	void swapLineFalse(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
-	void swapLineChar(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
+    
+	void makeLineFalse(int indexOfLineFromTop);//make the whole line in the board[][] false
+	void clearLineChar(int indexOfLineFromTop);//make the line empty in the board printing
+	void swapLineFalse(int firstLineFromTop, int secondLineFromTOP);
+	void printTheSwap(int firstLineFromTop, int secondLineFromTOP); 
 public:
-    Board() {};
-	void deleteLine(int numOfLineFromTheBottom);
+    Board() : currentShape() , gameBoard() {};
+	void deleteLine(int indexOfLineFromTop);
 	void printBlockInBoard(Block curBlock);
     bool GetGameBoardValue(int x, int y) const; //19/01/24
-
+    bool IsLineFull(int line);
     void generateTetromino();
-	bool isOverlapping(const Tetrominoes& tetromino) const;
-	bool isPlaced(const Tetrominoes tetromino);
+	bool isOverlapping(GameConfig::eKeys direction) const; //Changing to check direrction
+	//bool isPlaced(const Tetrominoes tetromino); - redundent, moveCurrent does it
     void placeTetromino();
+    void printShape(char charOfShape);
+    bool moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
 
 };
 
