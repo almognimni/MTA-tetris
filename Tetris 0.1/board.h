@@ -11,7 +11,7 @@ class Board
 public:
 	//A board that contains truth values in the places/blocks occupied by shapes on the board
 	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];
-    Tetrominoes currentShape;
+    Tetrominoes* currentShape;
 private:
 
 
@@ -21,14 +21,16 @@ private:
 	void swapLineFalse(int firstLineFromTop, int secondLineFromTOP);
 	void printTheSwap(int firstLineFromTop, int secondLineFromTOP); 
 public:
-    Board() : currentShape() , gameBoard() {};
+    Board() : gameBoard(), currentShape(nullptr) {};
+    //~Board();
 	void deleteLine(int indexOfLineFromTop);
 	void printBlockInBoard(Block curBlock);
     bool GetGameBoardValue(int x, int y) const; //19/01/24
     bool IsLineFull(int line);
     void generateTetromino();
-	bool isOverlapping(GameConfig::eKeys direction) const; //Changing to check direrction
-	//bool isPlaced(const Tetrominoes tetromino); - redundent, moveCurrent does it
+    void destroyTetromino();
+    bool isOverlapping() const; //Checks if the current position is occupied (For game end)
+	bool isOverlapping(GameConfig::eKeys direction) const; //Checks if a certain direction is occupied
     void placeTetromino();
     void printShape(char charOfShape);
     bool moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
@@ -36,26 +38,3 @@ public:
 };
 
 #endif
-
-/*
-Example for colition check by the board (will need to first make get functions to get cordinates to check from):
-
-bool Board::isOverlapping(const Tetromino& tetromino)
-{
-    for (const Block& block : tetromino.blocks)
-    {
-        if (block.x < 0 || block.x >= BOARD_SIZE || block.y < 0 || block.y >= BOARD_SIZE)
-        {
-            // Out of bounds
-            return true;
-        }
-        if (gameBoard[block.x][block.y])
-        {
-            // Position on the board is occupied
-            return true;
-        }
-    }
-    // No overlaps found
-    return false;
-
-*/

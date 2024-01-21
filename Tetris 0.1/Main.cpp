@@ -3,9 +3,11 @@
 
 int main()
 {
+	maximizeConsole();
 
 	TetrisGame Game;
-	gotoxy(0, 0);
+	Game.printLogo();
+	//gotoxy(0, 0);
 	Game.showMenu();
 	
 	

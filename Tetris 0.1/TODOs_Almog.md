@@ -48,6 +48,21 @@ Made "MoveCurrentShape" function on board (includes checking and printing) and r
 Changed the board functions that operates on tetrominoes to use this instead of parameter
 Working on game loop
 
+22/01
+Changed the instance of the tetromino object inside the board object to a pointer
+fixed the bouneries for the check overlap
+fixed some stuff in the play game loop
 
+The basic game loop is functional!
 
+added  a function to force full screen - not working
+added a default function for isOverlapping to check the current location
 
+- [ ] Set lose condition - after a new shape is generated, check if it's overlapping something else in the board
+- [ ] initiate random seed when program starts
+- [ ] add support for 2 players
+- [ ] consider to add bonues features:
+	- [ ] colors
+	- [ ] varaible speed
+	- [ ] scoreboard
+	- [x] tetris logo

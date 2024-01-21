@@ -27,7 +27,7 @@ void TetrisGame::drawBorderForBoard()
 void TetrisGame::showMenu() 
 {
 	int userChoice;
-	cout << "Tetris" << "\n" << "Welcome to the Tetris game" << endl;
+	//cout << "Tetris" << "\n" << endl; // << "Welcome to the Tetris game";
 	cout << "Menu:" << endl;
 	cout << "(1) Start a new game" << endl;
 	if (IsGamePaused == true)
@@ -46,8 +46,8 @@ void TetrisGame::showMenu()
 	switch (userChoice) {
 	case START_NEW_GAME:
 		// Handle starting a new game
-		clrscr(); //make empty screen
 		gotoxy(0, 0);
+		clrscr(); //make empty screen
 		startGame();
 		break;
 	case CONTINUE_GAME:
@@ -65,6 +65,7 @@ void TetrisGame::showMenu()
 			// Handle invalid choice
 		break;
 	}
+	gotoxy(0, 0);
 }
 
 /*
@@ -87,19 +88,27 @@ void TetrisGame::startGame()
 
 void TetrisGame::startGame()
 {
+	gotoxy(0, 0);
 	int indexOfLineFromTop;
 	bool isGameStillOn = true;
-	bool isFalling = true; //Can be in a class?
 	drawBorderForBoard(); //Need to draw for both players
-	p1.myPlayerBoard.printShape((char)BLOCK);//print
-	while (isGameStillOn)
+	while (p1.isAlive()) //Add p2
 	{
+		p1.myPlayerBoard.generateTetromino();
+		if (p1.myPlayerBoard.isOverlapping() == true)
+		{
+			//p1.setAlive();
+		}
+		p1.myPlayerBoard.printShape((char)BLOCK);
+	bool isFalling = true; //Can be in a class? /Moved down to be reseted/
+		//need to reset is falling and call for another shape (currently done before loop)
 		int keyPressed = 0;
 		while (isFalling)
 		{ 
-			//while that can take many move to do in one down
+			//input refreshes 10 times before lowering automatically
 			for (int i = 0; i < 10; i++)
 			{
+				fflush(stdin);
 				if (_kbhit())
 				{
 					keyPressed = _getch();
@@ -116,18 +125,23 @@ void TetrisGame::startGame()
 
 			isFalling = p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
 		}
+			//The temp shape has been placed, now may be deleted
+			if (p1.myPlayerBoard.currentShape != NULL)
+				delete p1.myPlayerBoard.currentShape;
 
 		//for checking if need do delete line
 			indexOfLineFromTop = GameConfig::GAME_HEIGHT - 1;
 			while (indexOfLineFromTop >=0)
 			{
-				if (p1.myPlayerBoard.IsLineFull(indexOfLineFromTop)==true)
+				if (p1.myPlayerBoard.IsLineFull(indexOfLineFromTop) == true)
 				{
 					p1.myPlayerBoard.deleteLine(indexOfLineFromTop);
 				}
 				else
 				indexOfLineFromTop--;
 			}
+
+
 	//	s.move((GameConfig::eKeys)keyPressed);
 
 
@@ -147,6 +161,27 @@ void TetrisGame::startGame()
 		
 
 	
+}
+
+void TetrisGame::printLogo()
+{
+	const char* lines[] = {
+		"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",
+		"  T    E        T    R   R    I    S      ",
+		"  T    EEE      T    RRRR     I     SSS   ",
+		"  T    E        T    R R      I        S  ",
+		"  T    EEEEE    T    R  RR  IIIII  SSSS   "
+	};
+
+	std::string border(40, '*');
+
+	cout << border << endl;
+	for (int i = 0; i < 5; ++i)
+	{
+		cout << lines[i] << endl;
+	}
+	cout << border << endl;
+	cout << endl;
 }
 
 /*

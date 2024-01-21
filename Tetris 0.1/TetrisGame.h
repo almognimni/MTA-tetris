@@ -27,6 +27,7 @@ class TetrisGame
 public:
 	//TetrisGame() { };
 	TetrisGame() : p1() {};
+	void printLogo();
 	void showMenu() ; //numOfChoise need to be enum // void showMenu(TetrisChoice& userChoice, bool IsGamePaused) 
 	void startGame();
 	void drawBorderForBoard();

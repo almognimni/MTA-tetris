@@ -206,7 +206,6 @@ Tetrominoes::Tetrominoes()
 
         break;
     }
-
     }
 }
 
@@ -277,13 +276,13 @@ void Tetrominoes::moveLeft() {
 //Rotate the shape clockwise
 void Tetrominoes::rotateClockwise()
 {
-	this->currentRotation = (this->currentRotation + 1) % MAX_SHAPE_ROTATIONS;
+	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
 }
 
 //Rotate the shape counter-clockwise
 void Tetrominoes::rotateCounterClockwise()
 {
-	this->currentRotation = (this->currentRotation - 1) % MAX_SHAPE_ROTATIONS;
+	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
 }
 
 int Tetrominoes::getRotation() const
@@ -293,13 +292,14 @@ int Tetrominoes::getRotation() const
 
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const
 {
-    int blockRotation = currentRotation + rotationMod;
+    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS; // Must explain
+
     return this->rotations[blockRotation][blockNum].getX();
 }
 
 int Tetrominoes::GetBlockY(int blockNum, int rotationMod) const
 {
-    int blockRotation = currentRotation + rotationMod;
+    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
     return this->rotations[blockRotation][blockNum].getY();
 }
 

@@ -8,6 +8,6 @@
 
 void gotoxy(int, int);
 void clrscr();
-
+void maximizeConsole();
 
 #endif // __GENERAL_H

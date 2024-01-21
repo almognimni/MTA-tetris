@@ -17,3 +17,15 @@ void clrscr()
 {
 	system("cls");
 }
+
+void maximizeConsole()
+{
+	HWND consoleWindow = GetConsoleWindow();  // Get a handle to the console window
+
+	// Get the current screen width and height
+	RECT screenRect;
+	GetWindowRect(GetDesktopWindow(), &screenRect);
+
+	// Resize the console window to the current screen width and height
+	MoveWindow(consoleWindow, 0, 0, screenRect.right, screenRect.bottom, TRUE);
+}

@@ -88,6 +88,22 @@ bool Board::GetGameBoardValue(int x, int y) const
 	return this->gameBoard[x][y];
 }
 
+bool Board::isOverlapping() const
+{
+	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	{
+		int blockX = this->currentShape->GetBlockX(i);//memmory leak?
+		int blockY = this->currentShape->GetBlockY(i);
+
+		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
+			return true;
+
+		if (this->gameBoard[blockX][blockY] == true)
+			return true;
+	}
+	return false;
+}
+
 bool Board::isOverlapping(GameConfig::eKeys direction) const
 {
 	//int currentRotation = tetromino.getRotation(); -- **redundent**
@@ -109,16 +125,20 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 	case GameConfig::eKeys::LEFT:
 		difX--;
 		break;
-	case GameConfig::eKeys::ROTATECLOCKWISE: //Need to continue
+	case GameConfig::eKeys::ROTATE_CLOCKWISE:
+		difRot++;
+		break;
 
+	case GameConfig::eKeys::ROTATE_COUNTERCLOCKWISE:
+		difRot--;
 	break;
 	}
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
-		int blockX = this->currentShape.GetBlockX(i) + difX;
-		int blockY = this->currentShape.GetBlockY(i) + difY;
+		int blockX = this->currentShape->GetBlockX(i, difRot) + difX;//memmory leak?
+		int blockY = this->currentShape->GetBlockY(i, difRot) + difY;
 
-		if (blockX < 0 || blockX > GameConfig::GAME_WIDTH || blockY > GameConfig::GAME_HEIGHT)
+		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
 			return true;
 
 		if (this->gameBoard[blockX][blockY] == true)
@@ -131,32 +151,32 @@ void Board::printShape(char charOfShape) //Should we remove the shape parameter?
 {
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
-		int blockX = this->currentShape.GetBlockX(i);
-		int blockY = this->currentShape.GetBlockY(i);
+		int blockX = this->currentShape->GetBlockX(i);
+		int blockY = this->currentShape->GetBlockY(i);
 		gotoxy(GameConfig::MIN_X_BOARD_1 + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
 		cout << charOfShape;
 	}
 	
 }
 
-void Board::generateTetromino()
+void Board::generateTetromino() //consider a differant approch where we don't allocate memory (copy operator)
 {
-	this->currentShape = Tetrominoes::Tetrominoes();
+	this->currentShape = new Tetrominoes(); 
 }
 
 void Board::placeTetromino()
 {
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
-		int blockX = this->currentShape.GetBlockX(i);
-		int blockY = this->currentShape.GetBlockX(i);
+		int blockX = this->currentShape->GetBlockX(i);
+		int blockY = this->currentShape->GetBlockY(i);
 		this->gameBoard[blockX][blockY] = true;
 	}
 }
 
 bool Board::moveCurrentShape(GameConfig::eKeys direction)
 {
-	bool hasReachedGround = false;
+	bool isFalling = true;
 
 	if (this->isOverlapping(direction) == false) //Need to update for rotations
 	{
@@ -164,21 +184,21 @@ bool Board::moveCurrentShape(GameConfig::eKeys direction)
 		switch (direction)
 		{
 		case GameConfig::eKeys::DROP:
-			this->currentShape.lower();
+			this->currentShape->lower();
 			break;
 		case GameConfig::eKeys::RIGHT:
-			this->currentShape.moveRight();
+			this->currentShape->moveRight();
 			break;
 		case GameConfig::eKeys::LEFT:
-			this->currentShape.moveLeft();
+			this->currentShape->moveLeft();
 			break;
 		
-		case GameConfig::eKeys::ROTATECLOCKWISE:
-			this->currentShape.rotateClockwise();
+		case GameConfig::eKeys::ROTATE_CLOCKWISE:
+			this->currentShape->rotateClockwise();
 			break;
 
-		case GameConfig::eKeys::ROTATECOUNTERCLOCKWISE:
-			this->currentShape.rotateCounterClockwise();
+		case GameConfig::eKeys::ROTATE_COUNTERCLOCKWISE:
+			this->currentShape->rotateCounterClockwise();
 			break;
 		}
 		this->printShape((char)219);
@@ -186,8 +206,8 @@ bool Board::moveCurrentShape(GameConfig::eKeys direction)
 
 	else if (direction == GameConfig::eKeys::DROP)
 	{
-		hasReachedGround = true;
+		isFalling = false;
 		placeTetromino();
 	}
-	return hasReachedGround;
+	return isFalling;
 }
