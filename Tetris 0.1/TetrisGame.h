@@ -17,17 +17,21 @@ enum TetrisChoice {
 	EXIT_GAME = 9
 };
 
+
 class TetrisGame
 {
-	//Player p1;
+	Player p1;
 	//Player p2;
-
 	bool IsGamePaused = false; //start with false
 
 public:
-	static void drawBorderForBoard();
-	void showMenu() const; //numOfChoise need to be enum // void showMenu(TetrisChoice& userChoice, bool IsGamePaused) 
+	//TetrisGame() { };
+	TetrisGame() : p1() {};
+	void showMenu() ; //numOfChoise need to be enum // void showMenu(TetrisChoice& userChoice, bool IsGamePaused) 
 	void startGame();
+	void drawBorderForBoard();
+
+private:
 
 };
 

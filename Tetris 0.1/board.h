@@ -10,9 +10,8 @@ class Board
 {
 public:
 	//A board that contains truth values in the places/blocks occupied by shapes on the board
-	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH] = { };
+	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];
     Tetrominoes currentShape;
-
 private:
 
 
@@ -22,7 +21,7 @@ private:
 	void swapLineFalse(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
 	void swapLineChar(int firstLineFromBottom, int secondLineFromBottom); //NEED TO DO
 public:
-    Board() {};
+    Board() : currentShape() , gameBoard() {};
 	void deleteLine(int numOfLineFromTheBottom);
 	void printBlockInBoard(Block curBlock);
     bool GetGameBoardValue(int x, int y) const; //19/01/24
@@ -31,6 +30,7 @@ public:
 	bool isOverlapping(const Tetrominoes& tetromino) const;
 	bool isPlaced(const Tetrominoes tetromino);
     void placeTetromino();
+    void printShape(const Tetrominoes& tetromino, char charOfShape) ;
 
 };
 

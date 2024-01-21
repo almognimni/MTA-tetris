@@ -30,3 +30,9 @@ When a piece is touching the ground - only the current rotation cordinates will 
 - [x] dynamiclly allocate the blocks array
 - [ ] replace "define" with const
 - [x] Make a tetrmonio destructor
+- [ ] Make some tetromino functions private
+
+20/01
+- [ ] 
+- [ ] 
+- [ ] 

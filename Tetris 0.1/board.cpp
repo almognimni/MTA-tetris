@@ -64,6 +64,18 @@ bool Board::isOverlapping(const Tetrominoes& tetromino) const //19_01_24 maor ma
 	return false;
 }
 
+void Board::printShape(const Tetrominoes& tetromino, char charOfShape) //19_01_24 maor made some changes in the h and cpp
+{
+	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	{
+		int blockX = tetromino.GetBlockX(i);
+		int blockY = tetromino.GetBlockY(i); //19/01/24 change GETBLOCK  to const function
+		gotoxy(GameConfig::MIN_X_BOARD_1 + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
+		cout << charOfShape;
+	}
+	
+}
+
 void Board::generateTetromino()
 {
 	this->currentShape = Tetrominoes::Tetrominoes();

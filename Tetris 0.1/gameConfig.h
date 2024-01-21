@@ -1,11 +1,12 @@
 #ifndef __GAME_CONFIG_H
 #define __GAME_CONFIG_H
 #include <Windows.h>
+#include <conio.h> // for kbhit
 
 class GameConfig
 {
 public:
-	enum class eKeys { LEFT = 'a', RIGHT = 's', UP = 'w', DOWN = 'z', ESC = 27 };
+	enum class eKeys { LEFT = 'a', RIGHT = 'd', ROTATECLOCKWISE = 's', ROTATECOUNTERCLOCKWISE = 'w', DROP = 'x', ESC = 27 };
 	static constexpr int GAME_WIDTH = 12;
 	static constexpr int GAME_HEIGHT = 18;
 
