@@ -3,10 +3,11 @@
 
 int main()
 {
-	maximizeConsole();
+	maximizeConsole(); // Not working
+
 
 	TetrisGame Game;
-	Game.printLogo();
+	Game.printTetrisAsciiArt();
 	//gotoxy(0, 0);
 	Game.showMenu();
 	

@@ -73,6 +73,8 @@ private:
     // Each rotation is represented as an array of Blocks.
     Block** rotations;
     int currentRotation;
+    int color;
+    ShapeType type; //Mostly for debugging
 
 public:
     Tetrominoes();
@@ -88,6 +90,7 @@ public:
 
     int GetBlockX(int blockNum, int rotation = 0) const; //rotation can be -1 or 1 for prev or next
     int GetBlockY(int blockNum, int rotation = 0) const;
+    int getColor() const { return color; }
     int getRotation() const;
    
 
@@ -96,7 +99,6 @@ public: //Static functions that are related to tetrominoes
     static void rotateMatrixClockwise(int matrix[4][4]);
 
 };
-
 
 #endif // !__TETROMINOES_H
 
