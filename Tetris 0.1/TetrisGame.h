@@ -28,7 +28,7 @@ public:
 	//TetrisGame() { };
 	TetrisGame() : p1() {};
 	void printLogo();
-	//void printColoredLogo();
+	void printColoredLogo(); // Used the other one
 	void printTetrisAsciiArt();
 	void showMenu() ; //numOfChoise need to be enum // void showMenu(TetrisChoice& userChoice, bool IsGamePaused) 
 	void startGame();

@@ -3,7 +3,8 @@
 
 int main()
 {
-	maximizeConsole();
+	maximizeConsole(); // Not working
+
 
 	TetrisGame Game;
 	Game.printTetrisAsciiArt();

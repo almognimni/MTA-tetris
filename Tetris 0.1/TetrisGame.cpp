@@ -239,6 +239,8 @@ void TetrisGame::printColoredLine(const std::string& line, const char* color)
 
 void TetrisGame::printTetrisAsciiArt()
 {
+	std::cout << "\033[0m";  // Reset to default color
+
 	std::string border(33, '*');
 
 	cout << border << endl;
