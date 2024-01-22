@@ -47,7 +47,8 @@ Tetrominoes::Tetrominoes(const Tetrominoes& other) {
         */
 
 //Function will take an 4x4 matrix representing a shape and a starting point and will create an array of 4 blocks representing it
-Block* Tetrominoes::createRotation(int arr[4][4], int midX) {
+Block* Tetrominoes::createRotation(int arr[4][4], int midX)
+{
     Block* rotation = new Block[BLOCKS_IN_SHAPE];
     int i = 0;
 
@@ -59,7 +60,7 @@ Block* Tetrominoes::createRotation(int arr[4][4], int midX) {
                 return rotation; //If we have 4 blocks we return the tetromino
 
             if (arr[row][col] == 1)
-            {          
+            {
                 rotation[i] = Block(midX - 1 + col, row);
                 i++;
             }
@@ -86,7 +87,7 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0}
         };
         for (int i = 0; i < MAX_SHAPE_ROTATIONS; i++) {
-            rotations[i] = createRotation(square, middleX);
+            rotations[i] = createRotation(square, startingX);
         }
         break;
     }
@@ -100,8 +101,8 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0},
             {0,0,0,0}
         };
-        rotations[0] = createRotation(line1, middleX);
-        rotations[2] = createRotation(line1, middleX);
+        rotations[0] = createRotation(line1, startingX);
+        rotations[2] = createRotation(line1, startingX);
 
         int line2[4][4] = {
             {0,0,1,0},
@@ -109,8 +110,8 @@ Tetrominoes::Tetrominoes()
             {0,0,1,0},
             {0,0,1,0}
         };
-        rotations[1] = createRotation(line2, middleX);
-        rotations[3] = createRotation(line2, middleX);
+        rotations[1] = createRotation(line2, startingX);
+        rotations[3] = createRotation(line2, startingX);
 
         break;
     }
@@ -123,12 +124,12 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0},
             {0,0,0,0}
         };
-        rotations[0] = createRotation(T, middleX);
+        rotations[0] = createRotation(T, startingX);
 
         for (int i = 1; i < 4; i++)
         {
             rotateMatrixClockwise(T);
-            rotations[i] = createRotation(T, middleX);
+            rotations[i] = createRotation(T, startingX);
         }
 
         break;
@@ -143,11 +144,11 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0}
         };
 
-        rotations[0] = createRotation(L, middleX);
+        rotations[0] = createRotation(L, startingX);
         for (int i = 1; i < 4; i++)
         {
             rotateMatrixClockwise(L);
-            rotations[i] = createRotation(L, middleX);
+            rotations[i] = createRotation(L, startingX);
         }
 
         break;
@@ -162,11 +163,11 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0}
         };
 
-        rotations[0] = createRotation(rL, middleX);
+        rotations[0] = createRotation(rL, startingX);
         for (int i = 1; i < 4; i++)
         {
             rotateMatrixClockwise(rL);
-            rotations[i] = createRotation(rL, middleX);
+            rotations[i] = createRotation(rL, startingX);
         }
 
         break;
@@ -179,12 +180,12 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0},
             {0,0,0,0}
         };
-        rotations[0] = createRotation(Z, middleX);
-        rotations[2] = createRotation(Z, middleX);        
+        rotations[0] = createRotation(Z, startingX);
+        rotations[2] = createRotation(Z, startingX);        
 
         rotateMatrixClockwise(Z);
-        rotations[1] = createRotation(Z, middleX);
-        rotations[3] = createRotation(Z, middleX);
+        rotations[1] = createRotation(Z, startingX);
+        rotations[3] = createRotation(Z, startingX);
 
         break;
     }
@@ -197,12 +198,12 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0},
             {0,0,0,0}
         };
-        rotations[0] = createRotation(rZ, middleX);
-        rotations[2] = createRotation(rZ, middleX); 
+        rotations[0] = createRotation(rZ, startingX);
+        rotations[2] = createRotation(rZ, startingX); 
 
         rotateMatrixClockwise(rZ);
-        rotations[1] = createRotation(rZ, middleX);
-        rotations[3] = createRotation(rZ, middleX);
+        rotations[1] = createRotation(rZ, startingX);
+        rotations[3] = createRotation(rZ, startingX);
 
         break;
     }

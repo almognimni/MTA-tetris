@@ -19,7 +19,7 @@ bool Board::IsLineFull(int line)
 {
 	int j;
 	for ( j = 0; j < GameConfig::GAME_WIDTH; j++)
-	{
+	{					//Y,X
 		if (this->gameBoard[line][j] == 0)
 			return false;
 	}
@@ -98,7 +98,7 @@ bool Board::isOverlapping() const
 		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
 			return true;
 
-		if (this->gameBoard[blockX][blockY] == true)
+		if (this->gameBoard[blockY][blockX] == true)
 			return true;
 	}
 	return false;
@@ -141,7 +141,7 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
 			return true;
 
-		if (this->gameBoard[blockX][blockY] == true)
+		if (this->gameBoard[blockY][blockX] == true)
 			return true;
 	}
 	return false;
@@ -170,7 +170,7 @@ void Board::placeTetromino()
 	{
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
-		this->gameBoard[blockX][blockY] = true;
+		this->gameBoard[blockY][blockX] = true;
 	}
 }
 

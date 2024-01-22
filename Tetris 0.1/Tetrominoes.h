@@ -2,7 +2,8 @@
 #define __TETROMINOES_H
 
 #include "Block.h"
-#include <cstdlib>  // for rand()
+#include "general.h"  // for rand()
+#include "gameConfig.h" //for board size
 
 #define BLOCKS_IN_SHAPE 4
 #define MAX_SHAPE_ROTATIONS 4
@@ -66,11 +67,11 @@ typedef enum
 class Tetrominoes // Shape
 {
 private:
-    //The refrence point for all the shape rotations
-    int middleX = 6, middleY = 0;
+    //The refrence point to start the shape
+    int startingX = GameConfig::GAME_WIDTH / 2;
     // An array of all rotations of the tetromino.
     // Each rotation is represented as an array of Blocks.
-    Block** rotations;  //00 10 20 11
+    Block** rotations;
     int currentRotation;
 
 public:

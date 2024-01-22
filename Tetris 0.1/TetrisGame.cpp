@@ -88,6 +88,7 @@ void TetrisGame::startGame()
 
 void TetrisGame::startGame()
 {
+	srand(time(0));
 	gotoxy(0, 0);
 	int indexOfLineFromTop;
 	bool isGameStillOn = true;
@@ -97,18 +98,22 @@ void TetrisGame::startGame()
 		p1.myPlayerBoard.generateTetromino();
 		if (p1.myPlayerBoard.isOverlapping() == true)
 		{
-			//p1.setAlive();
+			p1.killPlayer();
+			cout << "Player 1 has lost the game" << endl;
+			// I would like to have a messege "Press anykey to return to menu" instead of closing the game
+			// if we will have score then also display the score of both players
 		}
 		p1.myPlayerBoard.printShape((char)BLOCK);
-	bool isFalling = true; //Can be in a class? /Moved down to be reseted/
-		//need to reset is falling and call for another shape (currently done before loop)
+		bool isFalling = true; //Can be in a class? /Moved down to be reseted/
+
 		int keyPressed = 0;
 		while (isFalling)
 		{ 
 			//input refreshes 10 times before lowering automatically
+		
+				fflush(stdin);
 			for (int i = 0; i < 10; i++)
 			{
-				fflush(stdin);
 				if (_kbhit())
 				{
 					keyPressed = _getch();
@@ -117,10 +122,13 @@ void TetrisGame::startGame()
 
 					isFalling = p1.myPlayerBoard.moveCurrentShape((GameConfig::eKeys)keyPressed);
 				}
-					Sleep(50);
+				Sleep(50);
 			}
-
-			if (isFalling == false) // if the shape has reached the ground, don't lower automatically
+		
+		
+		
+		
+			if (isFalling == false)// if the shape has reached the ground, don't lower automatically
 				break;
 
 			isFalling = p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);

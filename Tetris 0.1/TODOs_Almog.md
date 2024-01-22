@@ -21,19 +21,6 @@ When a piece is touching the ground - only the current rotation cordinates will 
 
 	**It seems that the board should check for the collitions**
 
-	Tasks after meeting with maor:
-- [x] Collition checks in board
-- [ ] rotate function
-- [ ] collition check for next rotation
-- [ ] place tetromino on board
-
-- [x] dynamiclly allocate the blocks array
-- [ ] replace "define" with const
-- [x] Make a tetrmonio destructor
-- [ ] Make some tetromino functions private
-
-20/01
-- [ ] 
 - [ ] 
 - [ ] 
 
@@ -58,13 +45,29 @@ The basic game loop is functional!
 added  a function to force full screen - not working
 added a default function for isOverlapping to check the current location
 
-- [ ] Set lose condition - after a new shape is generated, check if it's overlapping something else in the board
-- [ ] initiate random seed when program starts
+## TODO's
+- [x] Set lose condition - after a new shape is generated, check if it's overlapping something else in the board
+- [x] initiate random seed when program starts
+- [x] fix shapes being being stuck in the middle
 - [ ] add support for 2 players
+- [ ] try to make playerBoard private
+- [ ] disable the default copy constructor for the tetrominos because of the way we use it in "Board"(?)
+### optional
 - [ ] consider to add bonues features:
+	- [x] tetris logo
 	- [ ] colors
 	- [ ] varaible speed
 	- [ ] scoreboard
-	- [x] tetris logo
 
+## Changes
+Fixed the wrong shape placments on the board
+moved rand to general, initiated seed on tetrisGame
+updated the starting point in the tetromino constructor to use 'BoardWidth'
+
+## Needs fixing
+- [ ] delete line (figure out the exact problem)
+- [ ] after a line is deleted shapes may sink into each other
+
+
+# For future
 - [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")

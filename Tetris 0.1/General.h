@@ -3,6 +3,8 @@
 
 #include <windows.h> // for gotoxy
 #include <process.h> // for system
+#include <cstdlib> // for rand
+#include <ctime> // for rand seed
 #include <iostream>
 
 
