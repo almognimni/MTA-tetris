@@ -91,8 +91,8 @@ public:
     int GetBlockX(int blockNum, int rotation = 0) const; //rotation can be -1 or 1 for prev or next
     int GetBlockY(int blockNum, int rotation = 0) const;
     int getColor() const { return color; }
-    int getRotation() const;
-   
+    int getRotation() const { return currentRotation; }
+    ShapeType getType() const { return type; }
 
 public: //Static functions that are related to tetrominoes
     static Block* createRotation(int arr[4][4], int midX);

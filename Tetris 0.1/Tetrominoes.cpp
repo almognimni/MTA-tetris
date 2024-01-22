@@ -80,7 +80,8 @@ Tetrominoes::Tetrominoes()
     {
     case ShapeType::SquereShape:
     {
-        color = 14;
+
+        color = GameConfig::COLORS[1];
         int square[4][4] = {
             {0,1,1,0},
             {0,1,1,0},
@@ -95,7 +96,7 @@ Tetrominoes::Tetrominoes()
 
     case ShapeType::LineShape:
     {
-        color = 3;
+        color = GameConfig::COLORS[2];
 
         int line1[4][4] = {
             {1,1,1,1},
@@ -120,7 +121,7 @@ Tetrominoes::Tetrominoes()
 
     case ShapeType::TShape:
     {
-        color = 5;
+        color = GameConfig::COLORS[3];
 
         int T[4][4] = {
             {1,1,1,0},
@@ -141,7 +142,7 @@ Tetrominoes::Tetrominoes()
 
     case ShapeType::LShape:
     {
-        color = 1;
+        color = GameConfig::COLORS[4];
 
         int L[4][4] = {
             {1,0,0,0},
@@ -162,7 +163,7 @@ Tetrominoes::Tetrominoes()
 
     case ShapeType::ReverseLShape:
     {
-        color = 6;
+        color = GameConfig::COLORS[5];
 
         int rL[4][4] = {
             {0,0,0,1},
@@ -182,7 +183,7 @@ Tetrominoes::Tetrominoes()
     }
     case ShapeType::ZShape:
     {
-        color = 4;
+        color = GameConfig::COLORS[6];
 
         int Z[4][4] = {
             {1,1,0,0},
@@ -202,7 +203,7 @@ Tetrominoes::Tetrominoes()
 
     case ShapeType::ReverseZShape:
     {
-        color = 2;
+        color = GameConfig::COLORS[7];
 
         int rZ[4][4] = {
             {0,1,1,0},
@@ -296,11 +297,6 @@ void Tetrominoes::rotateClockwise()
 void Tetrominoes::rotateCounterClockwise()
 {
 	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
-}
-
-int Tetrominoes::getRotation() const
-{
-    return this->currentRotation;
 }
 
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const

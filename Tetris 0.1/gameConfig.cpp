@@ -1,5 +1,5 @@
 #include "gameConfig.h"
 
 
-//const int GameConfig::COLORS[] = { FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED, 96, 176, 224, 95, 23, 111, 143, 48 };
+const int GameConfig::COLORS[] = { FOREGROUND_BLACK, 14, 3, 5, 1, 6, 4, 2 };
 //const int GameConfig::NUM_OF_COLORS = sizeof(COLORS) / sizeof(int);

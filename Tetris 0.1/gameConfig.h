@@ -1,5 +1,7 @@
 #ifndef __GAME_CONFIG_H
 #define __GAME_CONFIG_H
+#define FOREGROUND_BLACK  (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
+
 #include <Windows.h>
 #include <conio.h> // for kbhit
 
@@ -17,7 +19,7 @@ public:
 	//static constexpr int MIN_X_BOARD_2 = 10;
 	//static constexpr int MIN_Y_BOARD_2 = 3;
 
-	//static const int COLORS[];
+	static const int COLORS[8];
 	//static const int NUM_OF_COLORS;
 };
 #endif

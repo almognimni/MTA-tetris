@@ -12,16 +12,20 @@ public:
 	//A board that contains truth values in the places/blocks occupied by shapes on the board
 	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];
     Tetrominoes* currentShape;
+    char gameBoardColor[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH] = {};
+
 private:
 
 
+    bool shapeIsFalling;
     
 	void makeLineFalse(int indexOfLineFromTop);//make the whole line in the board[][] false
 	void clearLineChar(int indexOfLineFromTop);//make the line empty in the board printing
-	void swapLineFalse(int firstLineFromTop, int secondLineFromTOP);
+	void swapLineBoardAndColor(int firstLineFromTop, int secondLineFromTOP);
 	void printTheSwap(int firstLineFromTop, int secondLineFromTOP); 
+
 public:
-    Board() : gameBoard(), currentShape(nullptr) {};
+    Board() : gameBoard(), currentShape(nullptr), shapeIsFalling(false) {};
     //~Board();
 	void deleteLine(int indexOfLineFromTop);
 	void printBlockInBoard(Block curBlock);
@@ -33,8 +37,9 @@ public:
 	bool isOverlapping(GameConfig::eKeys direction) const; //Checks if a certain direction is occupied
     void placeTetromino();
     void printShape(char charOfShape);
-    bool moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
+    void moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
 
+    bool isShapeFalling() { return shapeIsFalling; }
 };
 
 #endif

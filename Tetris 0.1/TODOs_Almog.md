@@ -49,6 +49,7 @@ added a default function for isOverlapping to check the current location
 - [x] Set lose condition - after a new shape is generated, check if it's overlapping something else in the board
 - [x] initiate random seed when program starts
 - [x] fix shapes being being stuck in the middle
+- [ ] make it so the game dosn't run in the menu
 - [ ] add support for 2 players
 - [ ] try to make playerBoard private
 - [ ] disable the default copy constructor for the tetrominos because of the way we use it in "Board"(?)

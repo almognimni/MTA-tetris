@@ -10,7 +10,7 @@ void Board::deleteLine(int indexOfLineFromTop)
 	makeLineFalse(indexOfLineFromTop);
 	while (indexOfLineFromTop >= 1)
 	{
-		swapLineFalse(indexOfLineFromTop, indexOfLineFromTop - 1);
+		swapLineBoardAndColor(indexOfLineFromTop, indexOfLineFromTop - 1);
 		indexOfLineFromTop--;
 	}
 }
@@ -31,18 +31,26 @@ void Board::makeLineFalse(int indexOfLineFromTop)
 	for ( i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
 		this->gameBoard[indexOfLineFromTop][i] = false;
+		this->gameBoardColor[indexOfLineFromTop][i] = 0;//BLACK BACKGROUND
 	}
 }
 
-void Board::swapLineFalse(int firstLineFromTop, int secondLineFromTop)
+void Board::swapLineBoardAndColor(int firstLineFromTop, int secondLineFromTop)
 {
 	int i = 0;
 	bool temp;
-	for (i = 0; i < GameConfig::GAME_WIDTH; i++)
+	for (i = 0; i < GameConfig::GAME_WIDTH; i++) //Board Swap
 	{
 		temp=this->gameBoard[firstLineFromTop][i];
 		this->gameBoard[firstLineFromTop][i] = this->gameBoard[secondLineFromTop][i];
 		this->gameBoard[secondLineFromTop][i] = temp;
+	}
+	char tempColor;
+	for (i = 0; i < GameConfig::GAME_WIDTH; i++) //Board Color Swap
+	{
+		tempColor = this->gameBoardColor[firstLineFromTop][i];
+		this->gameBoardColor[firstLineFromTop][i] = this->gameBoardColor[secondLineFromTop][i];
+		this->gameBoardColor[secondLineFromTop][i] = tempColor;
 	}
 	printTheSwap(firstLineFromTop, secondLineFromTop);
 }
@@ -62,17 +70,29 @@ void Board::printTheSwap(int firstLineFromTop, int secondLineFromTop)
 {	
 	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
-		gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
+		gotoxy(GameConfig::MIN_X_BOARD_1+i, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
 		if (this->gameBoard[firstLineFromTop][i] == true)
+		{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),GameConfig::COLORS[this->gameBoardColor[firstLineFromTop][i]]); //casting auto for char to int?
 			cout << (char)219;
+		}
 		else
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
 			cout << ' ';
-		gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
-		if (this->gameBoard[secondLineFromTop][i] == true)
-			cout << (char)219;
-		else
-			cout << ' ';
+		}
 
+			gotoxy(GameConfig::MIN_X_BOARD_1+i, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
+		if (this->gameBoard[secondLineFromTop][i] == true)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[secondLineFromTop][i]]);//casting auto for char to int?
+			cout << (char)219;
+		}
+		else
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
+			cout << ' ';
+		}
 
 	}
 }
@@ -150,7 +170,7 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 void Board::printShape(char charOfShape) //Should we remove the shape parameter? WE JUST DIDDDDD
 {
 	if (charOfShape == ' ')
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),GameConfig::COLORS[0]);
 	else
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), this->currentShape->getColor());
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
@@ -166,6 +186,7 @@ void Board::printShape(char charOfShape) //Should we remove the shape parameter?
 void Board::generateTetromino() //consider a differant approch where we don't allocate memory (copy operator)
 {
 	this->currentShape = new Tetrominoes(); 
+	this->shapeIsFalling = true;
 }
 
 void Board::placeTetromino()
@@ -175,13 +196,12 @@ void Board::placeTetromino()
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
 		this->gameBoard[blockY][blockX] = true;
+		this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
 	}
 }
 
-bool Board::moveCurrentShape(GameConfig::eKeys direction)
-{
-	bool isFalling = true;
-
+void Board::moveCurrentShape(GameConfig::eKeys direction)
+{  
 	if (this->isOverlapping(direction) == false) //Need to update for rotations
 	{
 		this->printShape(' ');
@@ -210,8 +230,7 @@ bool Board::moveCurrentShape(GameConfig::eKeys direction)
 
 	else if (direction == GameConfig::eKeys::DROP)
 	{
-		isFalling = false;
+		shapeIsFalling = false;
 		placeTetromino();
 	}
-	return isFalling;
 }

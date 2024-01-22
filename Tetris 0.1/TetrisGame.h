@@ -22,11 +22,19 @@ class TetrisGame
 {
 	Player p1;
 	//Player p2;
-	bool IsGamePaused = false; //start with false
+	bool IsGamePaused = false; //start with false // Might be replaced by GameState
+	
+	enum GameState {
+		MENU,
+		NEW,
+		PLAYING,
+		PAUSED,
+		INSTRUCTIONS,
+		EXIT
+	} currrentState;
 
 public:
-	//TetrisGame() { };
-	TetrisGame() : p1() {};
+	TetrisGame();
 	void printLogo();
 	void printColoredLogo(); // Used the other one
 	void printTetrisAsciiArt();
