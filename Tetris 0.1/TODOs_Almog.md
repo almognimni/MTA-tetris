@@ -66,3 +66,5 @@ added a default function for isOverlapping to check the current location
 	- [ ] varaible speed
 	- [ ] scoreboard
 	- [x] tetris logo
+
+- [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")
