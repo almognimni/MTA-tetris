@@ -5,8 +5,8 @@
 #include "general.h"  // for rand()
 #include "gameConfig.h" //for board size
 
-#define BLOCKS_IN_SHAPE 4
-#define MAX_SHAPE_ROTATIONS 4
+constexpr int BLOCKS_IN_SHAPE = 4;
+constexpr int MAX_SHAPE_ROTATIONS = 4;
 
 /*
  * Squere Shape:

@@ -4,7 +4,6 @@ TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 {
 	srand(time(0));
 
-	printTetrisAsciiArt();
 
 	while (currrentState != EXIT)
 	{
@@ -56,12 +55,14 @@ void TetrisGame::drawBorderForBoard()
 void TetrisGame::showMenu()
 {
 	clrscr();
+	printTetrisAsciiArt();
 	int userChoice;
-	bool valid = true;
+	bool valid;
 
 	cout << "Menu:" << endl;
 	do
 	{
+		valid = true;
 		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
 			cout << "(2) Continue a paused game" << endl;
