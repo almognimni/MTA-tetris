@@ -234,3 +234,17 @@ void Board::moveCurrentShape(GameConfig::eKeys direction)
 		placeTetromino();
 	}
 }
+
+void Board::reset()
+{
+	for (int i = 0; i < GameConfig::GAME_HEIGHT; i++)
+	{
+		for (int j = 0; j < GameConfig::GAME_WIDTH; j++)
+		{
+			this->gameBoard[i][j] = false;
+			this->gameBoardColor[i][j] = 0; //Check if really 0
+		}
+	}
+	delete currentShape;
+	shapeIsFalling = false;
+}

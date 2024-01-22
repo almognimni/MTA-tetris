@@ -73,6 +73,14 @@ Added colored logo
 - [ ] delete line (figure out the exact problem)
 - [ ] after a line is deleted shapes may sink into each other
 
+## 22/01 menu changing
+made a tetris game constructor to handle menu, game and pausing
+created enum "GameState" to be used by the game constructor before calling the game\menu functions
+added reset function to: game, player, board function for starting a new game (accecible if paused)
+moved shapeFalling to the board class and changed the functions respectivly
+moved variables contaning current game state out of the start game function
+handled all invalid choices
+changed const BLOCK to constexplr and moved to "TetrisGame.h" file
 
 # For future
 - [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")

@@ -1,8 +1,5 @@
 #include "TetrisGame.h"
 
-const int BLOCK = 219;
-const int SPACE = ' ';
-
 TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 {
 	srand(time(0));
@@ -11,26 +8,28 @@ TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 
 	while (currrentState != EXIT)
 	{
+		gotoxy(0, 0);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLACK);
 		switch (currrentState)
 		{
 		case MENU:
 			showMenu();
 			break;
-		case NEW:
-			startGame();
+		//case NEW:
+			//reset();
+			//currrentState = PLAYING;
 		case PLAYING:
 			startGame();
 			break;
 		case PAUSED:
 			showMenu();
-		//break;
+		break;
 		//case INSTRUCTIONS:
 		//showInstructions()
 		//break;
 		}
 	}
 }
-
 
 void TetrisGame::drawBorderForBoard()
 {
@@ -54,77 +53,88 @@ void TetrisGame::drawBorderForBoard()
 
 }
 
-void TetrisGame::showMenu() 
+void TetrisGame::showMenu()
 {
+	clrscr();
 	int userChoice;
-	//bool startNew = false;
-	//cout << "Tetris" << "\n" << endl; // << "Welcome to the Tetris game";
+	bool valid = true;
+
 	cout << "Menu:" << endl;
-	cout << "(1) Start a new game" << endl;
-	if (currrentState == PAUSED)
-		cout << "(2) Continue a paused game" << endl;
-	cout << "(8) Present instructions and keys" << endl;
-	cout << "(9) EXIT" << endl;
-
-	cout << "Enter your choice: ";
-	cin >> userChoice;
-
-	switch (userChoice) {
-	case START_NEW_GAME:
-		// Handle starting a new game
-		gotoxy(0, 0);
-		clrscr(); //make empty screen
-		currrentState = NEW;
-		break;
-	case CONTINUE_GAME:
+	do
+	{
+		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
-			startGame();
+			cout << "(2) Continue a paused game" << endl;
+		cout << "(8) Present instructions and keys" << endl;
+		cout << "(9) EXIT" << endl;
 
-		break;
-	case INSTRUCTIONS:
-		currrentState = INSTRUCTIONS;
-		// Handle displaying instructions
-		break;
-	case EXIT_GAME:
-		currrentState = EXIT;
-		break;
-	default:
-		// Handle invalid choice
-		break;
-	}
-	//gotoxy(0, 0);
+		cout << "Enter your choice: ";
+		cin >> userChoice;
+
+		switch (userChoice)
+		{
+		case START_NEW_GAME:
+			// Handle starting a new game
+			if (currrentState == PAUSED)
+				reset();
+			currrentState = PLAYING;
+			break;
+
+		case CONTINUE_GAME:
+			if (currrentState == PAUSED)
+				startGame();
+			else
+				valid = false;
+			break;
+		case INSTRUCTIONS:
+			currrentState = INSTRUCTIONS;
+			// Handle displaying instructions
+			break;
+		case EXIT_GAME:
+			currrentState = EXIT;
+			break;
+		default:
+			valid = false;
+			break;
+		}
+		if (!valid)
+			cout << "Invalid choice" << endl;
+	} while (!valid);
 }
-
 
 void TetrisGame::startGame()
 {
+	clrscr();
 	gotoxy(0, 0);
 	int indexOfLineFromTop;
-	//bool isGameStillOn = true;
 	drawBorderForBoard(); //Need to draw for both players
 	//printPlayerBoard(p1, p2); // 
 
 	while (p1.isAlive()) //Add p2
 	{
 		//if (p1.myPlayerBoard.currentShape == NULL) // If resuming a paused game, no need to generate shape
+			if (p1.myPlayerBoard.isShapeFalling() == false) //If there is no active shape falling, generate
 			p1.myPlayerBoard.generateTetromino();
-		if (p1.myPlayerBoard.isOverlapping() == true)
+
+		if (p1.myPlayerBoard.isOverlapping() == true) //If the generated shape is overlapping - player lost
 		{
 			p1.killPlayer();
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_BLACK); //reset the color before printing text
 			cout << "Player 1 has lost the game" << endl;
-			// I would like to have a messege "Press anykey to return to menu" instead of closing the game
-			// if we will have score then also display the score of both players
+			currrentState = POST; // will have a screen saying who won, score, and ability to play again
+			return;
 		}
+
+
 		p1.myPlayerBoard.printShape((char)BLOCK);
 
 		int keyPressed = 0;
 		while (p1.myPlayerBoard.isShapeFalling() == true)
 		{
-			//input refreshes 10 times before lowering automatically
 
+			
 			fflush(stdin);
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; i++) //input refreshes 10 times before lowering automatically
 			{
 				if (_kbhit())
 				{
@@ -143,9 +153,9 @@ void TetrisGame::startGame()
 			if (p1.myPlayerBoard.isShapeFalling() == true)// if the shape has reached the ground, don't lower automatically
 				p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
 
-			//Same of 2nd player
+			//Same for 2nd player
 
-		}
+		} //ShapeIsFalling = false:
 		//The temp shape has been placed, now may be deleted
 		if (p1.myPlayerBoard.currentShape != NULL)
 			delete p1.myPlayerBoard.currentShape;
@@ -164,34 +174,7 @@ void TetrisGame::startGame()
 	}
 }
 
-		/* was inside start game
-		s.move((GameConfig::eKeys)keyPressed);
-
-
-		p1.myPlayerBoard.printShape(p1.myPlayerBoard.currentShape, ' ');//clean
-			p1.myPlayerBoard.currentShape.lower();
-
-		p1.myPlayerBoard.printShape(p1.myPlayerBoard.currentShape, (char)BLOCK);//print
-
-			Sleep(500); sleep(currentSpeed)
-		*/
-/*
-void TetrisGame::startGame()
-{
-	clrscr(); //make empty screen
-	drawBorderForBoard();
-//	Player p1;
-	bool IsGameStillOn = true;
-	//Tetrominoes t;
-	//while (IsGameStillOn)
-	//{
-	//	while (t.IsShapeTouchDown == false)
-		//{}
-	//}
-
-	//Player p2;
-}
-*/
+// not used
 void TetrisGame::printLogo()
 {
 	const char* lines[] = {
@@ -223,7 +206,8 @@ const char* COLORS[] = {
 	"\033[36m"  // Cyan
 };
 
-void TetrisGame::printColoredLogo()
+// not used
+void TetrisGame::printColoredLogo() 
 {
 	const char* lines[] = {
 	"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",

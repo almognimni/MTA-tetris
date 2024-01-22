@@ -40,6 +40,8 @@ public:
     void moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
 
     bool isShapeFalling() { return shapeIsFalling; }
+
+    void reset();
 };
 
 #endif

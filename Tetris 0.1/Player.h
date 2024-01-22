@@ -17,7 +17,7 @@ public:
 	Player(const Player& other) = delete; // What is this?
 	bool isAlive() const { return alive; }
 	void killPlayer() { this->alive = false; }
-
+	void reset() { myPlayerBoard.reset(); alive = true; };
 
 };
 
