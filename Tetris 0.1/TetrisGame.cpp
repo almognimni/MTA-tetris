@@ -99,6 +99,8 @@ void TetrisGame::startGame()
 		if (p1.myPlayerBoard.isOverlapping() == true)
 		{
 			p1.killPlayer();
+
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); //reset the color before printing text
 			cout << "Player 1 has lost the game" << endl;
 			// I would like to have a messege "Press anykey to return to menu" instead of closing the game
 			// if we will have score then also display the score of both players
@@ -168,7 +170,6 @@ void TetrisGame::startGame()
 	
 		
 
-	
 }
 
 void TetrisGame::printLogo()
@@ -192,22 +193,85 @@ void TetrisGame::printLogo()
 	cout << endl;
 }
 
-/*
-while (true)
-	{
-		int keyPressed = 0;
-		if (_kbhit())
-		{
-			keyPressed = _getch();
-			if (keyPressed == (int)GameConfig::eKeys::ESC)
-				break;
+const char* RESET = "\033[0m";
+const char* COLORS[] = {
+	"\033[31m", // Red
+	"\033[32m", // Green
+	"\033[33m", // Yellow
+	"\033[34m", // Blue
+	"\033[35m", // Magenta
+	"\033[36m"  // Cyan
+};
+
+void TetrisGame::printColoredLogo()
+{
+	const char* lines[] = {
+	"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",
+	"  T    E        T    R   R    I    S      ",
+	"  T    EEE      T    RRRR     I     SSS   ",
+	"  T    E        T    R R      I        S  ",
+	"  T    EEEEE    T    R  RR  IIIII  SSSS   "
+	};
+
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0, colorIndex = 0; lines[i][j] != '\0'; ++j, ++colorIndex) {
+			if (lines[i][j] == ' ') {
+				std::cout << lines[i][j];
+				continue; // Skip spaces
+			}
+			if (colorIndex >= sizeof(COLORS) / sizeof(COLORS[0])) {
+				colorIndex = 0; // Reset color index if it exceeds number of colors
+			}
+			std::cout << COLORS[colorIndex] << lines[i][j] << RESET;
 		}
-		s.move((GameConfig::eKeys)keyPressed);
-		Sleep(500);
+		std::cout << std::endl;
+	}
+}
+
+void TetrisGame::printColoredLine(const std::string& line, const char* color)
+{
+	std::cout << color;
+	for (char ch : line) {
+		std::cout << ch;
+	}
+	std::cout << "\033[0m";  // Reset to default color
+}
+
+void TetrisGame::printTetrisAsciiArt()
+{
+	std::string border(33, '*');
+
+	cout << border << endl;
+
+	const std::string lines[] = {
+		"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",
+		"  T    E        T    R   R    I    S      ",
+		"  T    EEE      T    RRRR     I     SSS   ",
+		"  T    E        T    R R      I        S  ",
+		"  T    EEEEE    T    R  RR  IIIII  SSSS   "
+	};
+
+	const char* colors[] = {
+		"\033[31m", // Red
+		"\033[32m", // Green
+		"\033[33m", // Yellow
+		"\033[34m", // Blue
+		"\033[35m", // Magenta
+		"\033[36m"  // Cyan
+	};
+
+	for (int i = 0; i < 5; ++i) {
+		printColoredLine(lines[i].substr(0, 5), colors[0]);  // T - Red
+		printColoredLine(lines[i].substr(6, 5), colors[1]);  // E - Green
+		printColoredLine(lines[i].substr(13, 5), colors[2]); // T - Yellow
+		printColoredLine(lines[i].substr(20, 5), colors[3]); // R - Blue
+		printColoredLine(lines[i].substr(27, 5), colors[4]); // I - Magenta
+		printColoredLine(lines[i].substr(34, 6), colors[5]); // S - Cyan
+		std::cout << std::endl;
 	}
 
-
-
-*/
+	cout << border << endl;
+	cout << endl;
+}
 
 

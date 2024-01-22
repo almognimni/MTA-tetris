@@ -1,7 +1,7 @@
 #ifndef __GENERAL_H
 #define __GENERAL_H
 
-#include <windows.h> // for gotoxy
+#include <windows.h> // for gotoxy and colors
 #include <process.h> // for system
 #include <cstdlib> // for rand
 #include <ctime> // for rand seed

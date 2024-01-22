@@ -149,6 +149,10 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 
 void Board::printShape(char charOfShape) //Should we remove the shape parameter? WE JUST DIDDDDD
 {
+	if (charOfShape == ' ')
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	else
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), this->currentShape->getColor());
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
 		int blockX = this->currentShape->GetBlockX(i);

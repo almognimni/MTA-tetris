@@ -55,14 +55,18 @@ added a default function for isOverlapping to check the current location
 ### optional
 - [ ] consider to add bonues features:
 	- [x] tetris logo
-	- [ ] colors
+	- [x] colors
+	- [x] colored menu? logo?
 	- [ ] varaible speed
 	- [ ] scoreboard
+- [ ] consider deleting "player.cpp"
 
 ## Changes
 Fixed the wrong shape placments on the board
 moved rand to general, initiated seed on tetrisGame
 updated the starting point in the tetromino constructor to use 'BoardWidth'
+Added colors
+Added colored logo
 
 ## Needs fixing
 - [ ] delete line (figure out the exact problem)
