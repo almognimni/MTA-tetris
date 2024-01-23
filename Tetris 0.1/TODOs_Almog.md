@@ -82,8 +82,15 @@ moved variables contaning current game state out of the start game function
 handled all invalid choices
 changed const BLOCK to constexplr and moved to "TetrisGame.h" file
 
-## 23
+## 23/01
 removed logo and show menu from main
+
+### implementing multiplayer
+adding the second player enum keys
+using a function to convert the recived char to lowercase
+
+- [ ] Need to think of a way to use the same fucntions with the different player charecters
+
 
 # For future
 - [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")

@@ -8,7 +8,8 @@
 class GameConfig
 {
 public:
-	enum class eKeys { LEFT = 'a', RIGHT = 'd', ROTATE_CLOCKWISE = 's', ROTATE_COUNTERCLOCKWISE = 'w', DROP = 'x', ESC = 27 };
+	enum class eKeys { p1LEFT = 'a', p1RIGHT = 'd', p1ROTATE_CLOCKWISE = 's', p1ROTATE_COUNTERCLOCKWISE = 'w', p1DROP = 'x',
+					   p2LEFT = 'j', p1RIGHT = 'd', p1ROTATE_CLOCKWISE = 's', p1ROTATE_COUNTERCLOCKWISE = 'w', p1DROP = 'x', ESC = 27 };
 	static constexpr int GAME_WIDTH = 12;
 	static constexpr int GAME_HEIGHT = 18;
 

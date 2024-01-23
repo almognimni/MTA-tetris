@@ -131,7 +131,7 @@ void TetrisGame::startGame()
 
 		p1.myPlayerBoard.printShape((char)BLOCK);
 
-		int keyPressed = 0;
+		//int keyPressed = 0;
 		while (p1.myPlayerBoard.isShapeFalling() == true)
 		{
 
@@ -141,7 +141,9 @@ void TetrisGame::startGame()
 			{
 				if (_kbhit())
 				{
-					keyPressed = _getch();
+					char keyPressed = _getch();
+					keyPressed = tolower(keyPressed);
+
 					if (keyPressed == (int)GameConfig::eKeys::ESC)
 					{
 						currrentState = PAUSED;
@@ -154,7 +156,7 @@ void TetrisGame::startGame()
 			}
 
 			if (p1.myPlayerBoard.isShapeFalling() == true)// if the shape has reached the ground, don't lower automatically
-				p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
+				p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::p1DROP);
 
 			//Same for 2nd player
 
