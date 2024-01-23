@@ -5,12 +5,7 @@ int main()
 {
 	maximizeConsole(); // Not working
 
-
 	TetrisGame Game;
-	Game.printTetrisAsciiArt();
-	//gotoxy(0, 0);
-	Game.showMenu();
-	
 	
 	gotoxy(0, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1 + 2);
 	return 0;
