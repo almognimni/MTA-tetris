@@ -82,6 +82,9 @@ moved variables contaning current game state out of the start game function
 handled all invalid choices
 changed const BLOCK to constexplr and moved to "TetrisGame.h" file
 
+## 23
+removed logo and show menu from main
+
 # For future
 - [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")
 
