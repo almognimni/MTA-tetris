@@ -248,3 +248,32 @@ void Board::reset()
 	delete currentShape;
 	shapeIsFalling = false;
 }
+
+void Board::printTheBoardFromZero()
+{
+	//void clrscr();//clean the board
+	//drawBorderForBoard() from the TetrisGame so maybe need to move the function for board //print empty board
+	for (int i = 0; i < GameConfig::GAME_HEIGHT; i++)
+	{
+		gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + i);
+		printLineInBoard(i);
+	}
+
+}
+
+void Board::printLineInBoard(int line)
+{
+	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
+	{
+		if (this->gameBoard[line][i] == true)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[line][i]]); //casting auto for char to int?
+			cout << (char)219;
+		}
+		else
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
+			cout << ' ';
+		}
+	}
+}

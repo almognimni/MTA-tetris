@@ -110,6 +110,7 @@ void TetrisGame::startGame()
 	int indexOfLineFromTop;
 	drawBorderForBoard(); //Need to draw for both players
 	//printPlayerBoard(p1, p2); // 
+	p1.myPlayerBoard.printTheBoardFromZero();
 
 	while (p1.isAlive()) //Add p2
 	{
