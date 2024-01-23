@@ -26,6 +26,8 @@ TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 		//case INSTRUCTIONS:
 		//showInstructions()
 		//break;
+		default:
+			break;
 		}
 	}
 }
