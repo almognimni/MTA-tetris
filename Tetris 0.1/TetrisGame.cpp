@@ -23,9 +23,6 @@ TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 		case PAUSED:
 			showMenu();
 		break;
-		//case INSTRUCTIONS:
-		//showInstructions()
-		//break;
 		}
 	}
 }
@@ -88,8 +85,7 @@ void TetrisGame::showMenu()
 				valid = false;
 			break;
 		case INSTRUCTIONS:
-			currrentState = INSTRUCTIONS;
-			// Handle displaying instructions
+			showInstructions();
 			break;
 		case EXIT_GAME:
 			currrentState = EXIT;
@@ -98,7 +94,7 @@ void TetrisGame::showMenu()
 			valid = false;
 			break;
 		}
-		if (!valid)
+		if (!valid &&)
 			cout << "Invalid choice" << endl;
 	} while (!valid);
 }
@@ -282,4 +278,12 @@ void TetrisGame::printTetrisAsciiArt()
 	cout << endl;
 }
 
+void TetrisGame::showInstructions()
+{
+	clrscr();
+	cout << "Tetris is a tile-matching game where players must arrange falling blocks, called Tetriminos, into complete rows without any gaps." << endl
+		<< "When a row is complete, it disappears, and the player earns points." << endl
+		<< "The goal is to clear as many rows as possible before the Tetriminos stack up to the top of the playing field." << endl;
+	GameState(MENU)
+}
 

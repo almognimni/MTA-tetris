@@ -43,6 +43,7 @@ public:
 	void startGame();
 	void drawBorderForBoard();
 	void reset() { p1.reset(); } //add p2(reset)
+	void showInstructions();
 
 private:
 	void printColoredLine(const std::string& line, const char* color);

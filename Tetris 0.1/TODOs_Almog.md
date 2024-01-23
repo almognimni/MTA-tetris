@@ -90,7 +90,7 @@ changed const BLOCK to constexplr and moved to "TetrisGame.h" file
 Game is in fully working order for 1 player.
 need to:
 
-- [ ] implement maor's print board function for resuming a paused game
+- [x] implement maor's print board function for resuming a paused game
 - [ ] add a post game screen (optional)
 - [ ] add instructions
 - [ ] add second player
