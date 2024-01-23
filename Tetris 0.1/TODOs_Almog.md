@@ -70,8 +70,8 @@ Added colors
 Added colored logo
 
 ## Needs fixing
-- [ ] delete line (figure out the exact problem)
-- [ ] after a line is deleted shapes may sink into each other
+- [x] delete line (figure out the exact problem)
+- [x] after a line is deleted shapes may sink into each other
 
 ## 22/01 menu changing
 made a tetris game constructor to handle menu, game and pausing
@@ -84,3 +84,12 @@ changed const BLOCK to constexplr and moved to "TetrisGame.h" file
 
 # For future
 - [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")
+
+
+## 23/01
+Game is in fully working order for 1 player.
+need to:
+
+- [ ] add instructions
+- [ ] add second player
+- [ ] add a post game screen (optional)
