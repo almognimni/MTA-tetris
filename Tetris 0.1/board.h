@@ -42,6 +42,10 @@ public:
     bool isShapeFalling() { return shapeIsFalling; }
 
     void reset();
+
+    void printTheBoardFromZero();
+    void printLineInBoard(int line);
+
 };
 
 #endif

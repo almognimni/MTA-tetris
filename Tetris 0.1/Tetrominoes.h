@@ -74,7 +74,7 @@ private:
     Block** rotations;
     int currentRotation;
     int color;
-    ShapeType type; //Mostly for debugging
+    ShapeType shapeType; //Mostly for debugging
 
 public:
     Tetrominoes();
@@ -92,7 +92,7 @@ public:
     int GetBlockY(int blockNum, int rotation = 0) const;
     int getColor() const { return color; }
     int getRotation() const { return currentRotation; }
-    ShapeType getType() const { return type; }
+    ShapeType getType() const { return shapeType; }
 
 public: //Static functions that are related to tetrominoes
     static Block* createRotation(int arr[4][4], int midX);

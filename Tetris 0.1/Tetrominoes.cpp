@@ -73,7 +73,7 @@ Block* Tetrominoes::createRotation(int arr[4][4], int midX)
 
 Tetrominoes::Tetrominoes()
 {
-    ShapeType shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
+    shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
     currentRotation = 0;
     rotations = new Block* [MAX_SHAPE_ROTATIONS];
     switch (shapeType)
