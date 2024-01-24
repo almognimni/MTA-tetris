@@ -1,6 +1,6 @@
 #include "TetrisGame.h"
 
-TetrisGame::TetrisGame(): p1(), currrentState(MENU)
+TetrisGame::TetrisGame(): p1(1), p2(2), currrentState(NEW)
 {
 	srand(time(0));
 
@@ -11,47 +11,20 @@ TetrisGame::TetrisGame(): p1(), currrentState(MENU)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLACK);
 		switch (currrentState)
 		{
-		case MENU:
+		case NEW:
 			showMenu();
 			break;
-		//case NEW:
-			//reset();
-			//currrentState = PLAYING;
 		case PLAYING:
 			startGame();
 			break;
 		case PAUSED:
 			showMenu();
 		break;
-		//case INSTRUCTIONS:
-		//showInstructions()
-		//break;
-		default:
+		case POST:
+			postGameScreen();
 			break;
 		}
 	}
-}
-
-void TetrisGame::drawBorderForBoard()
-{
-	for (int col = GameConfig::MIN_X_BOARD_1; col <= GameConfig::GAME_WIDTH + GameConfig::MIN_X_BOARD_1; col++)
-	{
-		gotoxy(col, GameConfig::MIN_Y_BOARD_1 - 1);
-		cout << "-";
-
-		gotoxy(col, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1);
-		cout << "-";
-	}
-
-	for (int row = GameConfig::MIN_Y_BOARD_1 - 1; row <= GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1; row++)
-	{
-		gotoxy(GameConfig::MIN_X_BOARD_1 - 1, row);
-		cout << "|";
-
-		gotoxy(GameConfig::GAME_WIDTH + GameConfig::MIN_X_BOARD_1, row);
-		cout << "|";
-	}
-
 }
 
 void TetrisGame::showMenu()
@@ -109,74 +82,59 @@ void TetrisGame::startGame()
 {
 	clrscr();
 	gotoxy(0, 0);
-	int indexOfLineFromTop;
-	drawBorderForBoard(); //Need to draw for both players
-	//printPlayerBoard(p1, p2); // 
+	//int indexOfLineFromTop; moved to function
+	p1.myPlayerBoard.printTheBoardFromZero();
+	p2.myPlayerBoard.printTheBoardFromZero();
 
-	while (p1.isAlive()) //Add p2
+	while (p1.isAlive() && p2.isAlive())
 	{
-		//if (p1.myPlayerBoard.currentShape == NULL) // If resuming a paused game, no need to generate shape
-			if (p1.myPlayerBoard.isShapeFalling() == false) //If there is no active shape falling, generate
-			p1.myPlayerBoard.generateTetromino();
+		if (p1.myPlayerBoard.isShapeFalling() == false) //If there is no active shape falling, generate
+				p1.myPlayerBoard.generateTetromino();
 
-		if (p1.myPlayerBoard.isOverlapping() == true) //If the generated shape is overlapping - player lost
+		if (p2.myPlayerBoard.isShapeFalling() == false)
+				p2.myPlayerBoard.generateTetromino();
+
+		if (p1.checkIfLost() || p2.checkIfLost())
 		{
-			p1.killPlayer();
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_BLACK); //reset the color before printing text
-			cout << "Player 1 has lost the game" << endl;
-			currrentState = POST; // will have a screen saying who won, score, and ability to play again
+			currrentState = POST;
 			return;
 		}
 
+		p1.myPlayerBoard.printShape();
+		p2.myPlayerBoard.printShape();
 
-		p1.myPlayerBoard.printShape((char)BLOCK);
+		char keyPressed = 0;
 
-		//int keyPressed = 0;
-		while (p1.myPlayerBoard.isShapeFalling() == true)
+		//fflush(stdin);
+		for (int i = 0; i < 10; i++) //input refreshes 10 times before lowering automatically
 		{
-
-			
-			fflush(stdin);
-			for (int i = 0; i < 10; i++) //input refreshes 10 times before lowering automatically
+			if (_kbhit())
 			{
-				if (_kbhit())
+				keyPressed = _getch();
+				keyPressed = tolower(keyPressed);
+				if (keyPressed == (int)GameConfig::eKeys::ESC)
 				{
-					char keyPressed = _getch();
-					keyPressed = tolower(keyPressed);
-
-					if (keyPressed == (int)GameConfig::eKeys::ESC)
-					{
-						currrentState = PAUSED;
-						return;
-					}
-
-					p1.myPlayerBoard.moveCurrentShape((GameConfig::eKeys)keyPressed);
+					currrentState = PAUSED;
+					return;
 				}
-				Sleep(50);
+				p1.handleInput(keyPressed);
+				p2.handleInput(keyPressed);
 			}
-
-			if (p1.myPlayerBoard.isShapeFalling() == true)// if the shape has reached the ground, don't lower automatically
-				p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::p1DROP);
-
-			//Same for 2nd player
-
-		} //ShapeIsFalling = false:
-		//The temp shape has been placed, now may be deleted
-		if (p1.myPlayerBoard.currentShape != NULL)
-			delete p1.myPlayerBoard.currentShape;
-
-		//for checking if need do delete line
-		indexOfLineFromTop = GameConfig::GAME_HEIGHT - 1;
-		while (indexOfLineFromTop >= 0)
-		{
-			if (p1.myPlayerBoard.IsLineFull(indexOfLineFromTop) == true)
-			{
-				p1.myPlayerBoard.deleteLine(indexOfLineFromTop);
-			}
-			else
-				indexOfLineFromTop--;
+			Sleep(50);
 		}
+
+		// if the shape is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentShape)
+		if (p1.myPlayerBoard.isShapeFalling() == true)
+			p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
+		else
+			p1.myPlayerBoard.deleteFullLines();
+
+		if (p2.myPlayerBoard.isShapeFalling() == true)
+			p2.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
+		else
+			p2.myPlayerBoard.deleteFullLines();	//delete full lines if there are any
 	}
+	currrentState = POST;
 }
 
 // not used
@@ -285,4 +243,30 @@ void TetrisGame::printTetrisAsciiArt()
 	cout << endl;
 }
 
+		
+	cout << "Press anykey to continue.";
+	_getch(); //waits for player input
+			return;
+}
 
+void TetrisGame::postGameScreen()
+{
+	short unsigned int winnerID = (p1.isAlive())? 1 : 2;
+
+	gotoxy(0, GameConfig::GAME_HEIGHT + 5);
+	cout << "Player " << winnerID << " has won the game!" << endl
+		<< "press 1 to play again or any other key to quit to the main menu";
+
+	Sleep(500); // to handle the case that the player was pressing a button when game ends
+
+	reset();
+    switch (_getch())
+    {
+        case '1':
+            currrentState = PLAYING;
+            break;
+		default:
+            currrentState = NEW;
+            break;
+    }
+}

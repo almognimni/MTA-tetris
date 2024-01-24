@@ -8,30 +8,24 @@
 #include <iostream>
 using namespace std;
 
-constexpr int BLOCK = 219;
-
 enum TetrisChoice {
 	START_NEW_GAME = 1,
 	CONTINUE_GAME = 2,
-	//INSTRUCTIONS = 8,
+	INSTRUCTIONS = 8,
 	EXIT_GAME = 9
 };
-
 
 class TetrisGame
 {
 	Player p1;
-	//Player p2;
-	//bool IsGamePaused = false; //start with false // Might be replaced by GameState
+	Player p2;
 	
 	enum GameState {
-		MENU,
-		NEW = 1,
+		NEW,
 		PLAYING,
 		PAUSED,
 		POST,
-		INSTRUCTIONS = 8,
-		EXIT = 9
+		EXIT
 	} currrentState;
 
 public:
@@ -39,10 +33,12 @@ public:
 	void printLogo();
 	void printColoredLogo(); // Used the other one
 	void printTetrisAsciiArt();
-	void showMenu() ; //numOfChoise need to be enum // void showMenu(TetrisChoice& userChoice, bool IsGamePaused) 
+	void showMenu() ;
 	void startGame();
-	void drawBorderForBoard();
-	void reset() { p1.reset(); } //add p2(reset)
+	//void drawBorderForBoard();
+	void reset() { p1.reset(), p2.reset(); }
+	void showInstructions();
+	void postGameScreen();
 
 private:
 	void printColoredLine(const std::string& line, const char* color);

@@ -92,5 +92,20 @@ using a function to convert the recived char to lowercase
 - [ ] Need to think of a way to use the same fucntions with the different player charecters
 
 
-# For future
-- [ ] try to eliminate the dynamic arrays for ex2 (consider using "vector")
+- [x] implement maor's print board function for resuming a paused game
+- [x] add instructions
+- [x] add second player
+- [x] add a post game screen (optional)
+- [ ] move some helper functions to private
+
+added enum keys per player and removed the values for the "general keys"
+added ID's for player and board
+made an input handle function for player which will move the shapes for the correct player by key pressed
+made function to check if someopne lost and set their alive status to false
+made the print shape function have a default value to print block and removed arg from play function
+inserted maor's line deletion functions and variable to a board function
+made a post game screen
+changed the game loop
+
+The game is now fully functional in multiplayer!
+

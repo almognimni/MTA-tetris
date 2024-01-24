@@ -126,7 +126,6 @@ bool Board::isOverlapping() const
 
 bool Board::isOverlapping(GameConfig::eKeys direction) const
 {
-	//int currentRotation = tetromino.getRotation(); -- **redundent**
 	
 	int difX = 0;
 	int difY = 0;
@@ -155,7 +154,7 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 	}
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
-		int blockX = this->currentShape->GetBlockX(i, difRot) + difX;//memmory leak?
+		int blockX = this->currentShape->GetBlockX(i, difRot) + difX;
 		int blockY = this->currentShape->GetBlockY(i, difRot) + difY;
 
 		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
@@ -177,7 +176,7 @@ void Board::printShape(char charOfShape) //Should we remove the shape parameter?
 	{
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
-		gotoxy(GameConfig::MIN_X_BOARD_1 + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
+		gotoxy(printLocation + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
 		cout << charOfShape;
 	}
 	
@@ -197,12 +196,17 @@ void Board::placeTetromino()
 		int blockY = this->currentShape->GetBlockY(i);
 		this->gameBoard[blockY][blockX] = true;
 		this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
+
 	}
+		delete this->currentShape;
 }
 
 void Board::moveCurrentShape(GameConfig::eKeys direction)
 {  
-	if (this->isOverlapping(direction) == false) //Need to update for rotations
+	if (this->isShapeFalling() == false) // If there is no falling shape for the player at the momment, it has been placed and the temp shape is deleted
+		return;
+
+	if (this->isOverlapping(direction) == false)
 	{
 		this->printShape(' ');
 		switch (direction)
@@ -247,4 +251,68 @@ void Board::reset()
 	}
 	delete currentShape;
 	shapeIsFalling = false;
+}
+
+void Board::printTheBoardFromZero()
+{
+	printBoardBoarders();
+
+	for (int i = 0; i < GameConfig::GAME_HEIGHT; i++)
+	{
+		gotoxy(printLocation, GameConfig::MIN_Y_BOARD_1 + i);
+		printLineInBoard(i);
+	}
+
+}
+
+void Board::printLineInBoard(int line)
+{
+	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
+	{
+		if (this->gameBoard[line][i] == true)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[line][i]]); //casting auto for char to int?
+			cout << (char)219;
+		}
+		else
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
+			cout << ' ';
+		}
+	}
+}
+
+void Board::printBoardBoarders()
+{
+	for (int col = printLocation; col <= GameConfig::GAME_WIDTH + printLocation; col++)
+	{
+		gotoxy(col, GameConfig::MIN_Y_BOARD_1 - 1);
+		cout << "-";
+
+		gotoxy(col, GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1);
+		cout << "-";
+	}
+
+	for (int row = GameConfig::MIN_Y_BOARD_1 - 1; row <= GameConfig::GAME_HEIGHT + GameConfig::MIN_Y_BOARD_1; row++)
+	{
+		gotoxy(printLocation - 1, row);
+		cout << "|";
+
+		gotoxy(GameConfig::GAME_WIDTH + printLocation, row);
+		cout << "|";
+	}
+}
+
+void Board::deleteFullLines()
+{
+	int indexOfLineFromTop = GameConfig::GAME_HEIGHT - 1;
+	while (indexOfLineFromTop >= 0)
+	{
+		if (IsLineFull(indexOfLineFromTop))
+		{
+			deleteLine(indexOfLineFromTop);
+		}
+		else
+			indexOfLineFromTop--;
+	}
 }
