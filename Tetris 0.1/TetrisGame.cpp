@@ -63,8 +63,7 @@ void TetrisGame::showMenu()
 				valid = false;
 			break;
 		case INSTRUCTIONS:
-			currrentState = INSTRUCTIONS;
-			// Handle displaying instructions
+			showInstructions();
 			break;
 		case EXIT_GAME:
 			currrentState = EXIT;
@@ -243,10 +242,33 @@ void TetrisGame::printTetrisAsciiArt()
 	cout << endl;
 }
 
-		
+void TetrisGame::showInstructions()
+{
+	clrscr();
+	cout << "Tetris is a tile-matching game where players must arrange falling blocks, called Tetriminos, into complete rows without any gaps." << endl
+		<< "When a row is complete, it disappears, and the player earns points." << endl
+		<< "The goal is to clear as many rows as possible before the Tetriminos stack up to the top of the playing field." << endl << endl
+		<< "Controls:" << endl
+		<< "Player:				Player One		Player Two" << endl;
+
+	for (int i = 0; i < 67; i++) //Prints underline
+	{
+		cout << "-";
+	}
+	cout << endl;
+
+	cout
+		<< "Move Left:			Press A			Press J" << endl
+
+		<< "Move Right:			Press D			Press L" << endl
+		<< "Rotate Clockwise:		Press W			Press I" << endl
+		<< "Rotate Counterclockwise:	Press S			Press K" << endl
+		<< "Move Down:			Press X			Press M" << endl;
+
+
 	cout << "Press anykey to continue.";
 	_getch(); //waits for player input
-			return;
+	return;
 }
 
 void TetrisGame::postGameScreen()
