@@ -41,8 +41,6 @@ added a default function for isOverlapping to check the current location
 - [x] initiate random seed when program starts
 - [x] fix shapes being being stuck in the middle
 - [x] make it so the game dosn't run in the menu
-- [ ] try to make playerBoard private
-- [ ] disable the default copy constructor for the tetrominos because of the way we use it in "Board"(?)
 ### optional
 - [ ] consider to add bonues features:
 	- [x] tetris logo
