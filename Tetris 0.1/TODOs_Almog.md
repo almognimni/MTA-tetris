@@ -4,8 +4,6 @@ Right now the plan is to move all the rotations simultaniusly, but to allow to r
 When a piece is touching the ground - only the current rotation cordinates will be marked true by the board
 
 
-
-
 - [x] understand board, game and game config files
 - [x] Add method for a shape to check if a place is occupied
 - [x] Add method to place a shape on the board if it touches true while it's lowering

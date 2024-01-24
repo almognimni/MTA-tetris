@@ -30,7 +30,7 @@ class TetrisGame
 
 private:
 	void showInstructions();
-	void printColoredLine(const std::string& line, const char* color);
+	void printColoredLine(const std::string& line, const char* color = "\033[37m"); //White for default value
 	void printLogo();
 	void printTetrisAsciiArt();
 	void postGameScreen();
@@ -40,7 +40,7 @@ public:
 	void showMenu() ;
 	void startGame();
 	void reset() { p1.reset(), p2.reset(); }
-
+	void toggleColors();
 
 };
 

@@ -34,6 +34,7 @@ private:
 	void printBlockInBoard(Block curBlock);
     void printBoardBoarders();
     bool IsLineFull(int line);
+    bool gameWithColors = true;
 
 public:
     Board(short unsigned int ID) : ID(ID), gameBoard(), currentShape(nullptr), shapeIsFalling(false) { printLocation = (ID == 1) ? GameConfig::MIN_X_BOARD_1 : GameConfig::MIN_X_BOARD_2; };
@@ -47,6 +48,8 @@ public:
     void reset();
     void printBoard();
     void deleteFullLines();
+    bool isColored() const { return gameWithColors; }
+    void setBoardColors(bool input) { this->gameWithColors = input; }
 
 
 

@@ -168,10 +168,15 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 
 void Board::printShape(char charOfShape)
 {
-	if (charOfShape == ' ')
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),GameConfig::COLORS[0]);
+	int currentShapeColor;
+	if (this->gameWithColors == false)
+		currentShapeColor = GameConfig::COLORS[0];
 	else
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), this->currentShape->getColor());
+		currentShapeColor = this->currentShape->getColor();
+	if (charOfShape == ' ')
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
+	else
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentShapeColor);
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
 		int blockX = this->currentShape->GetBlockX(i);
@@ -179,7 +184,7 @@ void Board::printShape(char charOfShape)
 		gotoxy(printLocation + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
 		cout << charOfShape;
 	}
-	
+
 }
 
 void Board::generateTetromino() //consider a differant approch where we don't allocate memory (copy operator)
@@ -195,10 +200,9 @@ void Board::placeTetromino()
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
 		this->gameBoard[blockY][blockX] = true;
-		this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
-
+		if (this->gameWithColors == true) //maor new
+			this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
 	}
-		delete this->currentShape;
 }
 
 void Board::moveCurrentShape(GameConfig::eKeys direction)

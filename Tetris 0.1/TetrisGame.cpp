@@ -41,6 +41,7 @@ void TetrisGame::showMenu()
 		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
 			cout << "(2) Continue a paused game" << endl;
+		cout << "(3) Toggle colors" << endl;
 		cout << "(8) Present instructions and keys" << endl;
 		cout << "(9) EXIT" << endl;
 
@@ -67,6 +68,10 @@ void TetrisGame::showMenu()
 			break;
 		case EXIT_GAME:
 			currrentState = EXIT;
+			break;
+		case 3:
+			toggleColors();
+			valid = true; //To print the menu again with/without colors
 			break;
 		default:
 			valid = false;
@@ -169,7 +174,7 @@ const char* COLORS[] = {
 };
 
 
-void TetrisGame::printColoredLine(const std::string& line, const char* color)
+void TetrisGame::printColoredLine(const std::string& line, const char* color )
 {
 	std::cout << color;
 	for (char ch : line) {
@@ -187,7 +192,8 @@ void TetrisGame::printTetrisAsciiArt()
 
 	cout << border << endl;
 
-	const std::string lines[] = {
+	const std::string lines[] =
+	{
 		"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",
 		"  T    E        T    R   R    I    S      ",
 		"  T    EEE      T    RRRR     I     SSS   ",
@@ -195,7 +201,8 @@ void TetrisGame::printTetrisAsciiArt()
 		"  T    EEEEE    T    R  RR  IIIII  SSSS   "
 	};
 
-	const char* colors[] = {
+	const char* colors[] =
+	{
 		"\033[31m", // Red
 		"\033[32m", // Green
 		"\033[33m", // Yellow
@@ -204,16 +211,32 @@ void TetrisGame::printTetrisAsciiArt()
 		"\033[36m"  // Cyan
 	};
 
-	for (int i = 0; i < 5; ++i) {
-		printColoredLine(lines[i].substr(0, 5), colors[0]);  // T - Red
-		printColoredLine(lines[i].substr(6, 5), colors[1]);  // E - Green
-		printColoredLine(lines[i].substr(13, 5), colors[2]); // T - Yellow
-		printColoredLine(lines[i].substr(20, 5), colors[3]); // R - Blue
-		printColoredLine(lines[i].substr(27, 5), colors[4]); // I - Magenta
-		printColoredLine(lines[i].substr(34, 6), colors[5]); // S - Cyan
-		std::cout << std::endl;
+	if (this->p1.myPlayerBoard.isColored() == true)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			printColoredLine(lines[i].substr(0, 5), colors[0]);  // T - Red
+			printColoredLine(lines[i].substr(6, 5), colors[1]);  // E - Green
+			printColoredLine(lines[i].substr(13, 5), colors[2]); // T - Yellow
+			printColoredLine(lines[i].substr(20, 5), colors[3]); // R - Blue
+			printColoredLine(lines[i].substr(27, 5), colors[4]); // I - Magenta
+			printColoredLine(lines[i].substr(34, 6), colors[5]); // S - Cyan
+			std::cout << std::endl;
+		}
 	}
-
+	else
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			printColoredLine(lines[i].substr(0, 5));  // T - Red
+			printColoredLine(lines[i].substr(6, 5));  // E - Green
+			printColoredLine(lines[i].substr(13, 5)); // T - Yellow
+			printColoredLine(lines[i].substr(20, 5)); // R - Blue
+			printColoredLine(lines[i].substr(27, 5)); // I - Magenta
+			printColoredLine(lines[i].substr(34, 6)); // S - Cyan
+			std::cout << std::endl;
+		}
+	}
 	cout << border << endl;
 	cout << endl;
 }
@@ -267,4 +290,28 @@ void TetrisGame::postGameScreen()
             currrentState = NEW;
             break;
     }
+}
+
+void TetrisGame::toggleColors()
+{
+	/*
+	clrscr();
+	printColoredLogo();
+	int userChoiceColor;
+	cout << "\n";
+	cout << "(0) Press for game with black and white colors" << endl;
+	cout << "(1) Press for game with colors" << endl;
+	cout << "Enter your choice: ";
+	cin >> userChoiceColor;
+	*/
+	if (this->p1.myPlayerBoard.isColored())
+	{
+		this->p1.myPlayerBoard.setBoardColors(false);
+		this->p2.myPlayerBoard.setBoardColors(false);
+	}
+	else
+	{
+		this->p1.myPlayerBoard.setBoardColors(true);
+		this->p2.myPlayerBoard.setBoardColors(true);
+	}
 }
