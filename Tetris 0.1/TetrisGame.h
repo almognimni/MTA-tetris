@@ -28,20 +28,19 @@ class TetrisGame
 		EXIT
 	} currrentState;
 
-public:
-	TetrisGame();
-	void printLogo();
-	void printColoredLogo(); // Used the other one
-	void printTetrisAsciiArt();
-	void showMenu() ;
-	void startGame();
-	//void drawBorderForBoard();
-	void reset() { p1.reset(), p2.reset(); }
+private:
 	void showInstructions();
+	void printColoredLine(const std::string& line, const char* color);
+	void printLogo();
+	void printTetrisAsciiArt();
 	void postGameScreen();
 
-private:
-	void printColoredLine(const std::string& line, const char* color);
+public:
+	TetrisGame();
+	void showMenu() ;
+	void startGame();
+	void reset() { p1.reset(), p2.reset(); }
+
 
 };
 

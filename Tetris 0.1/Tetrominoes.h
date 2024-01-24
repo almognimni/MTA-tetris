@@ -9,41 +9,11 @@ constexpr int BLOCKS_IN_SHAPE = 4;
 constexpr int MAX_SHAPE_ROTATIONS = 4;
 
 /*
- * Squere Shape:
- *  **
- *  **
- *
- * Line Shape:
- *          *
- *  ****    *
- *          *
- *          *
- *
- * T Shape:
- * ***   *  *     *
- *  *   **  **   ***
- *       *  *    
- *
- * L Shape:
- *  *   **     
- *  *    *  *    ***
- *  **   *  ***  * 
- *
- * Reverse L Shape:
- *   *  **  
- *   *  *     *  ***
- *  **  *   ***    *
- *
- * Reverse Z Shape:
- *          
- *   **   *   
- *  **    **   
- *         *
- *
- * Z Shape:
- *        *
- *  **   **
- *   **  *
+ * Squere Shape: | Line Shape  |  T Shape:           |  L Shape:          |  Reverse L Shape:   |  Reverse Z Shape: |  Z Shape:
+ *  **           |          *  |  ***   *  *     *   |   *   **           |    *  **            |                   |         *
+ *  **           |  ****    *  |   *   **  **   ***  |   *    *  *    *** |    *  *     *  ***  |    **   *         |   **   **
+ *               |          *  |        *  *         |   **   *  ***  *   |   **  *   ***    *  |   **    **        |    **  *
+ *               |          *  |                     |                    |                     |            *      |
  */
 
 typedef enum {
@@ -85,9 +55,6 @@ public:
     void rotateClockwise();
     void rotateCounterClockwise();
 
-    //bool isTouching(int x, int y);
-    //bool isOverlapping(int x, int y); //Handle by board
-
     int GetBlockX(int blockNum, int rotation = 0) const; //rotation can be -1 or 1 for prev or next
     int GetBlockY(int blockNum, int rotation = 0) const;
     int getColor() const { return color; }
@@ -101,12 +68,3 @@ public: //Static functions that are related to tetrominoes
 };
 
 #endif // !__TETROMINOES_H
-
-/*
-functions graveyard:
-    Tetrominoes(Block blocks[BLOCKS_IN_SHAPE]);
-    Tetrominoes(const Tetrominoes& other);
-    Tetrominoes(int arr[4][4], int midX);
- static Tetrominoes[MAX_SHAPE_ROTATIONS] generateShapeRotations(ShapeType type); 
-
-*/

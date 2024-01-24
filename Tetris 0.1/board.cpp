@@ -166,7 +166,7 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 	return false;
 }
 
-void Board::printShape(char charOfShape) //Should we remove the shape parameter? WE JUST DIDDDDD
+void Board::printShape(char charOfShape)
 {
 	if (charOfShape == ' ')
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),GameConfig::COLORS[0]);
@@ -246,14 +246,14 @@ void Board::reset()
 		for (int j = 0; j < GameConfig::GAME_WIDTH; j++)
 		{
 			this->gameBoard[i][j] = false;
-			this->gameBoardColor[i][j] = 0; //Check if really 0
+			this->gameBoardColor[i][j] = 0;
 		}
 	}
 	delete currentShape;
 	shapeIsFalling = false;
 }
 
-void Board::printTheBoardFromZero()
+void Board::printBoard()
 {
 	printBoardBoarders();
 
@@ -271,7 +271,7 @@ void Board::printLineInBoard(int line)
 	{
 		if (this->gameBoard[line][i] == true)
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[line][i]]); //casting auto for char to int?
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[line][i]]);
 			cout << (char)219;
 		}
 		else

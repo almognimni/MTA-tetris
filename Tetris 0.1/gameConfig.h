@@ -2,7 +2,7 @@
 #define __GAME_CONFIG_H
 #define FOREGROUND_BLACK  (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
 
-#include <Windows.h>
+#include <Windows.h> // for sleep and colors
 #include <conio.h> // for kbhit
 
 class GameConfig
@@ -25,7 +25,9 @@ public:
 	static constexpr int MIN_X_BOARD_2 = 26;
 	static constexpr int MIN_Y_BOARD_2 = 3;
 
-	static const int COLORS[8];
-	//static const int NUM_OF_COLORS;
+	static const int COLORS[];
+
 };
+
+
 #endif

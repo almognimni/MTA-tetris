@@ -82,8 +82,8 @@ void TetrisGame::startGame()
 	clrscr();
 	gotoxy(0, 0);
 	//int indexOfLineFromTop; moved to function
-	p1.myPlayerBoard.printTheBoardFromZero();
-	p2.myPlayerBoard.printTheBoardFromZero();
+	p1.myPlayerBoard.printBoard();
+	p2.myPlayerBoard.printBoard();
 
 	while (p1.isAlive() && p2.isAlive())
 	{
@@ -168,31 +168,6 @@ const char* COLORS[] = {
 	"\033[36m"  // Cyan
 };
 
-// not used
-void TetrisGame::printColoredLogo() 
-{
-	const char* lines[] = {
-	"TTTTT  EEEEE  TTTTT  RRRR   IIIII   SSSS  ",
-	"  T    E        T    R   R    I    S      ",
-	"  T    EEE      T    RRRR     I     SSS   ",
-	"  T    E        T    R R      I        S  ",
-	"  T    EEEEE    T    R  RR  IIIII  SSSS   "
-	};
-
-	for (int i = 0; i < 5; ++i) {
-		for (int j = 0, colorIndex = 0; lines[i][j] != '\0'; ++j, ++colorIndex) {
-			if (lines[i][j] == ' ') {
-				std::cout << lines[i][j];
-				continue; // Skip spaces
-			}
-			if (colorIndex >= sizeof(COLORS) / sizeof(COLORS[0])) {
-				colorIndex = 0; // Reset color index if it exceeds number of colors
-			}
-			std::cout << COLORS[colorIndex] << lines[i][j] << RESET;
-		}
-		std::cout << std::endl;
-	}
-}
 
 void TetrisGame::printColoredLine(const std::string& line, const char* color)
 {
@@ -202,6 +177,7 @@ void TetrisGame::printColoredLine(const std::string& line, const char* color)
 	}
 	std::cout << "\033[0m";  // Reset to default color
 }
+
 
 void TetrisGame::printTetrisAsciiArt()
 {

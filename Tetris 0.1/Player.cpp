@@ -1,8 +1,5 @@
 #include "Player.h"
 
-
-//player::player()  myPlayerBoard(), isAlive(true) {};
-
 void Player::handleInput(char key)
 {
 

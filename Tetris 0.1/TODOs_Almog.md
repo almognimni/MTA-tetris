@@ -6,28 +6,21 @@ When a piece is touching the ground - only the current rotation cordinates will 
 
 
 
-- [ ] understand board, game and game config files
-- [ ] Add method for a function to check if a place is occupied (if the board cell has true) *might be handled by board*
-- [ ] Add method to place a function on the board if it touches true while it's lowering (return true or something) *might be handled by board*
-- [ ] Make "move" method move all the rotation, will check collition only for the active one *might assume the board checked if possible first*
-- [ ] Make "rotate" method, will check if the next shape collide before switching the active rotation
+- [x] understand board, game and game config files
+- [x] Add method for a shape to check if a place is occupied
+- [x] Add method to place a shape on the board if it touches true while it's lowering
+- [x] Make "move" method move all the rotation, will check collition only for the active one *might assume the board checked if possible first*
+- [x] Make "rotate" method, will check if the next shape collide before switching the active rotation (in other function before it)
 
-- [ ] For collition checks - the board needs to recive the cordinates of the current rotation blocks and check if those fields are occupied
-	*Might also be possible that each block will check if the board is occupied there*
+- [x] For collition checks - the board needs to recive the cordinates of the current rotation blocks and check if those fields are occupied
 
-- [ ] Make a function that will give the location of the current rotation (maybe by 2 arrays, one for x one for y? / maybe 2x4 array of ints, xy cord for each block?)
+- [x] Make a function that will give the location of a rotation
 
-- [ ] Brainstorm with maor befor making further changes
+- [x] Brainstorm with maor befor making further changes
 
 	**It seems that the board should check for the collitions**
 
-- [ ] 
-- [ ] 
-
-
 21/01 changes:
-- [x] consider not requiering "Tetromino" parameter in the board functions (it has it in the class) 
-
 
 Changed the isOverlapping to check for a specific direction (TODO - need to include rotations as well)
 Made "Place tetromino function"
@@ -49,8 +42,7 @@ added a default function for isOverlapping to check the current location
 - [x] Set lose condition - after a new shape is generated, check if it's overlapping something else in the board
 - [x] initiate random seed when program starts
 - [x] fix shapes being being stuck in the middle
-- [ ] make it so the game dosn't run in the menu
-- [ ] add support for 2 players
+- [x] make it so the game dosn't run in the menu
 - [ ] try to make playerBoard private
 - [ ] disable the default copy constructor for the tetrominos because of the way we use it in "Board"(?)
 ### optional
@@ -60,7 +52,6 @@ added a default function for isOverlapping to check the current location
 	- [x] colored menu? logo?
 	- [ ] varaible speed
 	- [ ] scoreboard
-- [ ] consider deleting "player.cpp"
 
 ## Changes
 Fixed the wrong shape placments on the board
@@ -70,8 +61,8 @@ Added colors
 Added colored logo
 
 ## Needs fixing
-- [ ] delete line (figure out the exact problem)
-- [ ] after a line is deleted shapes may sink into each other
+- [x] delete line (figure out the exact problem)
+- [x] after a line is deleted shapes may sink into each other
 
 ## 22/01 menu changing
 made a tetris game constructor to handle menu, game and pausing
@@ -89,14 +80,12 @@ removed logo and show menu from main
 adding the second player enum keys
 using a function to convert the recived char to lowercase
 
-- [ ] Need to think of a way to use the same fucntions with the different player charecters
-
-
+- [x] Need to think of a way to use the same fucntions with the different player charecters
 - [x] implement maor's print board function for resuming a paused game
 - [x] add instructions
 - [x] add second player
 - [x] add a post game screen (optional)
-- [ ] move some helper functions to private
+- [x] move some helper functions to private
 
 added enum keys per player and removed the values for the "general keys"
 added ID's for player and board
