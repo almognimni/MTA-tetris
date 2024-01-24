@@ -33,10 +33,10 @@ private:
     void printLineInBoard(int line);
 	void printBlockInBoard(Block curBlock);
     void printBoardBoarders();
-    bool IsLineFull(int line);
-    bool gameWithColors = true;
+    bool gameWithColors;
 
 public:
+    bool IsLineFull(int line);
     Board(short unsigned int ID) : ID(ID), gameBoard(), currentShape(nullptr), shapeIsFalling(false) { printLocation = (ID == 1) ? GameConfig::MIN_X_BOARD_1 : GameConfig::MIN_X_BOARD_2; };
     void generateTetromino();
     bool GetGameBoardValue(int x, int y) const; //19/01/24

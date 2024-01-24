@@ -31,7 +31,7 @@ void Board::makeLineFalse(int indexOfLineFromTop)
 	for ( i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
 		this->gameBoard[indexOfLineFromTop][i] = false;
-		this->gameBoardColor[indexOfLineFromTop][i] = 0;//BLACK BACKGROUND
+		this->gameBoardColor[indexOfLineFromTop][i] = 0; //BLACK BACKGROUND
 	}
 }
 
@@ -320,3 +320,4 @@ void Board::deleteFullLines()
 			indexOfLineFromTop--;
 	}
 }
+

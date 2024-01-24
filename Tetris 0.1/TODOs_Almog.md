@@ -94,3 +94,5 @@ changed the game loop
 
 The game is now fully functional in multiplayer!
 
+*** color toggle makes it so line deletion is not working ***
+
