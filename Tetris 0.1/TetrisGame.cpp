@@ -41,7 +41,7 @@ void TetrisGame::showMenu()
 		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
 			cout << "(2) Continue a paused game" << endl;
-		cout << "(3) Toggle colors" << endl;
+//		cout << "(3) Toggle colors" << endl;
 		cout << "(8) Present instructions and keys" << endl;
 		cout << "(9) EXIT" << endl;
 
@@ -69,10 +69,10 @@ void TetrisGame::showMenu()
 		case EXIT_GAME:
 			currrentState = EXIT;
 			break;
-		case 3:
-			toggleColors();
-			valid = true; //To print the menu again with/without colors
-			break;
+//		case 3:
+//			toggleColors();
+//			valid = true; //To print the menu again with/without colors
+//			break;
 		default:
 			valid = false;
 			break;
