@@ -243,13 +243,13 @@ void Tetrominoes::moveLeft() {
 //Rotate the shape clockwise
 void Tetrominoes::rotateClockwise()
 {
-	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
+	this->currentRotation = ((this->currentRotation + 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
 }
 
 //Rotate the shape counter-clockwise
 void Tetrominoes::rotateCounterClockwise()
 {
-	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
+	this->currentRotation = ((this->currentRotation - 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
 }
 
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const
