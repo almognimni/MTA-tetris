@@ -41,6 +41,7 @@ void TetrisGame::showMenu()
 		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
 			cout << "(2) Continue a paused game" << endl;
+		if (currrentState == NEW)
 		cout << "(3) Toggle colors" << endl;
 		cout << "(8) Present instructions and keys" << endl;
 		cout << "(9) EXIT" << endl;
@@ -70,9 +71,12 @@ void TetrisGame::showMenu()
 			currrentState = EXIT;
 			break;
 		case 3:
+			if (currrentState == NEW)
+			{
 			toggleColors();
 			valid = true; //To print the menu again with/without colors
 			break;
+			}
 		default:
 			valid = false;
 			break;
@@ -128,15 +132,12 @@ void TetrisGame::startGame()
 		}
 
 		// if the shape is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentShape)
-		if (p1.myPlayerBoard.isShapeFalling() == true)
 			p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
-		else
-			p1.myPlayerBoard.deleteFullLines();
-
-		if (p2.myPlayerBoard.isShapeFalling() == true)
 			p2.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
-		else
-			p2.myPlayerBoard.deleteFullLines();	//delete full lines if there are any
+		if (p1.myPlayerBoard.isShapeFalling() == false)
+			p1.myPlayerBoard.deleteFullLines(); //delete full lines if there are any
+		if (p2.myPlayerBoard.isShapeFalling() == false)
+			p2.myPlayerBoard.deleteFullLines();
 	}
 	currrentState = POST;
 }
