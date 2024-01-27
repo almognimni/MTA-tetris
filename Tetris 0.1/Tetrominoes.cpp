@@ -8,19 +8,19 @@
         //     { 0, 0, 0, 0 },
         //     { 0, 0, 0, 0 },
         // }
-        */
+*/
 
-//Function will take an 4x4 matrix representing a shape and a starting point and will create an array of 4 blocks representing it
+//Function will take an 4x4 matrix representing a tetromino and a starting point and will create an array of 4 blocks representing it
 Block* Tetrominoes::createRotation(int arr[4][4], int midX)
 {
-    Block* rotation = new Block[BLOCKS_IN_SHAPE];
+    Block* rotation = new Block[BLOCKS_IN_TETROMINO];
     int i = 0;
 
-    for (int row = 0; row < BLOCKS_IN_SHAPE; row++)
+    for (int row = 0; row < BLOCKS_IN_TETROMINO; row++)
     {
-        for (int col = 0; col < BLOCKS_IN_SHAPE; col++)
+        for (int col = 0; col < BLOCKS_IN_TETROMINO; col++)
         {
-            if (i >= BLOCKS_IN_SHAPE)
+            if (i >= BLOCKS_IN_TETROMINO)
                 return rotation; //If we have 4 blocks we return the tetromino
 
             if (arr[row][col] == 1)
@@ -32,18 +32,16 @@ Block* Tetrominoes::createRotation(int arr[4][4], int midX)
     }
     return rotation;
 }
-//TODO - free the memory after a shape has been placed on the board
-//Create a free function that will free the rotations of a shape
 
 Tetrominoes::Tetrominoes()
 {
-    ShapeType shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
-    this->type = shapeType;
+    TetrominoType tetrominoType = (TetrominoType)(rand() % 7);
+    this->type = tetrominoType;
     currentRotation = 0;
-    rotations = new Block* [MAX_SHAPE_ROTATIONS];
-    switch (shapeType)
+    rotations = new Block* [MAX_TETROMINO_ROTATIONS];
+    switch (tetrominoType)
     {
-    case ShapeType::SquereShape:
+    case TetrominoType::SquereTetromino:
     {
 
         color = GameConfig::COLORS[1];
@@ -53,13 +51,13 @@ Tetrominoes::Tetrominoes()
             {0,0,0,0},
             {0,0,0,0}
         };
-        for (int i = 0; i < MAX_SHAPE_ROTATIONS; i++) {
+        for (int i = 0; i < MAX_TETROMINO_ROTATIONS; i++) {
             rotations[i] = createRotation(square, startingX);
         }
         break;
     }
 
-    case ShapeType::LineShape:
+    case TetrominoType::LineTetromino:
     {
         color = GameConfig::COLORS[2];
 
@@ -84,7 +82,7 @@ Tetrominoes::Tetrominoes()
         break;
     }
 
-    case ShapeType::TShape:
+    case TetrominoType::T_Tetromino:
     {
         color = GameConfig::COLORS[3];
 
@@ -105,7 +103,7 @@ Tetrominoes::Tetrominoes()
         break;
     }
 
-    case ShapeType::LShape:
+    case TetrominoType::LTetromino:
     {
         color = GameConfig::COLORS[4];
 
@@ -126,7 +124,7 @@ Tetrominoes::Tetrominoes()
         break;
     }
 
-    case ShapeType::ReverseLShape:
+    case TetrominoType::ReverseLTetromino:
     {
         color = GameConfig::COLORS[5];
 
@@ -146,7 +144,7 @@ Tetrominoes::Tetrominoes()
 
         break;
     }
-    case ShapeType::ZShape:
+    case TetrominoType::ZTetromino:
     {
         color = GameConfig::COLORS[6];
 
@@ -166,7 +164,7 @@ Tetrominoes::Tetrominoes()
         break;
     }
 
-    case ShapeType::ReverseZShape:
+    case TetrominoType::ReverseZTetromino:
     {
         color = GameConfig::COLORS[7];
 
@@ -209,9 +207,9 @@ void Tetrominoes::rotateMatrixClockwise(int matrix[4][4])
 
 //Moves all rotations down
 void Tetrominoes::lower() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
     {
-        for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+        for (int j = 0; j < BLOCKS_IN_TETROMINO; j++)
         {
             this->rotations[i][j].lower();
         }
@@ -220,9 +218,9 @@ void Tetrominoes::lower() {
 
 //Moves all rotations to the right
 void Tetrominoes::moveRight() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
     {
-    for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+    for (int j = 0; j < BLOCKS_IN_TETROMINO; j++)
     {
         this->rotations[i][j].moveRight();
     }
@@ -232,43 +230,43 @@ void Tetrominoes::moveRight() {
 
 //Moves all rotations to the left
 void Tetrominoes::moveLeft() {
-    for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+    for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
     {
-        for (int j = 0; j < BLOCKS_IN_SHAPE; j++)
+        for (int j = 0; j < BLOCKS_IN_TETROMINO; j++)
         {
         this->rotations[i][j].moveLeft();
         }
     }
 }
 
-//Rotate the shape clockwise
+//Rotate the tetromino clockwise
 void Tetrominoes::rotateClockwise()
 {
-    this->currentRotation = ((this->currentRotation + 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
-}
+    this->currentRotation = ((this->currentRotation + 1) + MAX_TETROMINO_ROTATIONS) % MAX_TETROMINO_ROTATIONS; // Adding the amount of rotations and taking the remainder
+}                                                                                                              // makes it so the current rotation is always between 0-3
 
-//Rotate the shape counter-clockwise
+//Rotate the tetromino counter-clockwise
 void Tetrominoes::rotateCounterClockwise()
 {
-    this->currentRotation = ((this->currentRotation - 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
+    this->currentRotation = ((this->currentRotation - 1) + MAX_TETROMINO_ROTATIONS) % MAX_TETROMINO_ROTATIONS;
 }
 
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const
 {
-    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS; // Must explain
+    int blockRotation = ((currentRotation + rotationMod) + MAX_TETROMINO_ROTATIONS) % MAX_TETROMINO_ROTATIONS;
 
     return this->rotations[blockRotation][blockNum].getX();
 }
 
 int Tetrominoes::GetBlockY(int blockNum, int rotationMod) const
 {
-    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
+    int blockRotation = ((currentRotation + rotationMod) + MAX_TETROMINO_ROTATIONS) % MAX_TETROMINO_ROTATIONS;
     return this->rotations[blockRotation][blockNum].getY();
 }
 
  Tetrominoes::~Tetrominoes()
 {
-    for (int i = 0; i < MAX_SHAPE_ROTATIONS; i++)
+    for (int i = 0; i < MAX_TETROMINO_ROTATIONS; i++)
     {
 		delete[] rotations[i];
 	}

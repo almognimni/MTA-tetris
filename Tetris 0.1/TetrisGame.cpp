@@ -48,6 +48,12 @@ void TetrisGame::showMenu()
 
 		cout << "Enter your choice: ";
 		cin >> userChoice;
+		if (cin.fail()) // To prevent a loop if cin got a value that is not of an integer
+		{
+			cin.clear(); // clear the fail state
+			cin.ignore(1000, '\n'); // ignore the bad input
+			valid = false;
+		}
 
 		switch (userChoice)
 		{
@@ -96,10 +102,10 @@ void TetrisGame::startGame()
 
 	while (p1.isAlive() && p2.isAlive())
 	{
-		if (p1.myPlayerBoard.isShapeFalling() == false) //If there is no active shape falling, generate
+		if (p1.myPlayerBoard.isTetrominoFalling() == false) //If there is no active tetromino falling, generate
 				p1.myPlayerBoard.generateTetromino();
 
-		if (p2.myPlayerBoard.isShapeFalling() == false)
+		if (p2.myPlayerBoard.isTetrominoFalling() == false)
 				p2.myPlayerBoard.generateTetromino();
 
 		if (p1.checkIfLost() || p2.checkIfLost())
@@ -108,8 +114,8 @@ void TetrisGame::startGame()
 			return;
 		}
 
-		p1.myPlayerBoard.printShape();
-		p2.myPlayerBoard.printShape();
+		p1.myPlayerBoard.printTetromino();
+		p2.myPlayerBoard.printTetromino();
 
 		char keyPressed = 0;
 
@@ -131,13 +137,13 @@ void TetrisGame::startGame()
 			Sleep(50);
 		}
 
-			p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
-			p2.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
-		// if the shape is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentShape)
-		if (p1.myPlayerBoard.isShapeFalling() == false)
+			p1.myPlayerBoard.moveCurrentTetromino(GameConfig::eKeys::DROP);
+			p2.myPlayerBoard.moveCurrentTetromino(GameConfig::eKeys::DROP);
+		// if the tetromino is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentTetromino)
+		if (p1.myPlayerBoard.isTetrominoFalling() == false)
 			p1.myPlayerBoard.deleteFullLines();
 
-		if (p2.myPlayerBoard.isShapeFalling() == false)
+		if (p2.myPlayerBoard.isTetrominoFalling() == false)
 			p2.myPlayerBoard.deleteFullLines();	//delete full lines if there are any
 	}
 	currrentState = POST;

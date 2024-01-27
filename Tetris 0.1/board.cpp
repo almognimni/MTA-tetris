@@ -125,10 +125,10 @@ bool Board::GetGameBoardValue(int x, int y) const
 
 bool Board::isOverlapping() const
 {
-	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
 	{
-		int blockX = this->currentShape->GetBlockX(i);//memmory leak?
-		int blockY = this->currentShape->GetBlockY(i);
+		int blockX = this->currentTetromino->GetBlockX(i);//memmory leak?
+		int blockY = this->currentTetromino->GetBlockY(i);
 
 		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
 			return true;
@@ -168,10 +168,10 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 		difRot--;
 	break;
 	}
-	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
 	{
-		int blockX = this->currentShape->GetBlockX(i, difRot) + difX;
-		int blockY = this->currentShape->GetBlockY(i, difRot) + difY;
+		int blockX = this->currentTetromino->GetBlockX(i, difRot) + difX;
+		int blockY = this->currentTetromino->GetBlockY(i, difRot) + difY;
 
 		if (blockX < 0 || blockX >= GameConfig::GAME_WIDTH || blockY >= GameConfig::GAME_HEIGHT)
 			return true;
@@ -182,78 +182,74 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 	return false;
 }
 
-void Board::printShape(char charOfShape)
+void Board::printTetromino(char charOfTetromino)
 {
 	if (this->gameWithColors == true)
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->currentShape->getType() + 1]); //changed now 25/01
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->currentTetromino->getType() + 1]); //changed now 25/01
 
-	//if (charOfShape == (char)GameConfig::EMPTYBOLCK)
-	//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
-	//else
-	//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentShapeColor); //changed now 25/01
-
-		for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+		for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
 	{
-		int blockX = this->currentShape->GetBlockX(i);
-		int blockY = this->currentShape->GetBlockY(i);
+		int blockX = this->currentTetromino->GetBlockX(i);
+		int blockY = this->currentTetromino->GetBlockY(i);
 		gotoxy(printLocation + blockX, GameConfig::MIN_Y_BOARD_1 + blockY);
-		cout << charOfShape;
+		cout << charOfTetromino;
 	}
 
 }
 
-void Board::generateTetromino() //consider a differant approch where we don't allocate memory (copy operator)
+void Board::generateTetromino()
 {
-	this->currentShape = new Tetrominoes(); 
-	this->shapeIsFalling = true;
+	this->currentTetromino = new Tetrominoes(); 
+	this->tetrominoIsFalling = true;
 }
 
 void Board::placeTetromino()
 {
-	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	for (int i = 0; i < BLOCKS_IN_TETROMINO; i++)
 	{
-		int blockX = this->currentShape->GetBlockX(i);
-		int blockY = this->currentShape->GetBlockY(i);
+		int blockX = this->currentTetromino->GetBlockX(i);
+		int blockY = this->currentTetromino->GetBlockY(i);
 		this->gameBoard[blockY][blockX] = true;
-		if (this->gameWithColors == true) //maor new
-			this->gameBoardColor[blockY][blockX] = (this->currentShape->getType() + 1);
+		if (this->gameWithColors == true)
+			this->gameBoardColor[blockY][blockX] = (this->currentTetromino->getType() + 1);
 	}
+	delete currentTetromino; // Calls the destructor for a tetromino
 }
 
-void Board::moveCurrentShape(GameConfig::eKeys direction)
+void Board::moveCurrentTetromino(GameConfig::eKeys direction)
 {  
-	if (this->isShapeFalling() == false) // If there is no falling shape for the player at the momment, it has been placed and the temp shape is deleted
+	if (this->isTetrominoFalling() == false) // If there is no falling tetromino for the player at the momment, it has been placed and the temp tetromino is deleted
 		return;
 
 	if (this->isOverlapping(direction) == false)
 	{
-		this->printShape((char)GameConfig::EMPTYBOLCK);
+		this->printTetromino((char)GameConfig::EMPTYBOLCK);
 		switch (direction)
 		{
 		case GameConfig::eKeys::DROP:
-			this->currentShape->lower();
+			this->currentTetromino->lower();
 			break;
 		case GameConfig::eKeys::RIGHT:
-			this->currentShape->moveRight();
+			this->currentTetromino->moveRight();
 			break;
 		case GameConfig::eKeys::LEFT:
-			this->currentShape->moveLeft();
+			this->currentTetromino->moveLeft();
 			break;
 		
 		case GameConfig::eKeys::ROTATE_CLOCKWISE:
-			this->currentShape->rotateClockwise();
+			this->currentTetromino->rotateClockwise();
 			break;
 
 		case GameConfig::eKeys::ROTATE_COUNTERCLOCKWISE:
-			this->currentShape->rotateCounterClockwise();
+			this->currentTetromino->rotateCounterClockwise();
 			break;
 		}
-		this->printShape((char)GameConfig::BLOCK);
+		this->printTetromino((char)GameConfig::BLOCK);
 	}
 
 	else if (direction == GameConfig::eKeys::DROP)
 	{
-		shapeIsFalling = false;
+		tetrominoIsFalling = false;
 		placeTetromino();
 	}
 }
@@ -268,8 +264,8 @@ void Board::reset()
 			this->gameBoardColor[i][j] = 0;
 		}
 	}
-	delete currentShape;
-	shapeIsFalling = false;
+	delete currentTetromino;
+	tetrominoIsFalling = false;
 }
 
 void Board::printBoard()
@@ -296,7 +292,6 @@ void Board::printLineInBoard(int line)
 		}
 		else
 		{
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
 			cout << (char)GameConfig::EMPTYBOLCK;
 		}
 	}

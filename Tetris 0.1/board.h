@@ -11,15 +11,15 @@ class Board
 public:
      
     int printLocation;  // X-coordinate for printing on the screen
-	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];  //A board that contains truth values in the blocks occupied by shapes on the board
-    Tetrominoes* currentShape;// Pointer to the current falling shape
+	bool gameBoard[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH];  //A board that contains truth values in the blocks occupied by tetrominoes on the board
+    Tetrominoes* currentTetromino;// Pointer to the current falling tetromino
     char gameBoardColor[GameConfig::GAME_HEIGHT][GameConfig::GAME_WIDTH] = {}; // 2D array to represent the color of each block , Initialized to default color 
 
 
 private:
 
     short unsigned int ID; // Player ID
-    bool shapeIsFalling; // Flag indicating if a shape is currently falling
+    bool tetrominoIsFalling; // Flag indicating if a tetromino is currently falling
     bool gameWithColors; // Flag indicating if the game uses colors
 
 private:
@@ -47,7 +47,7 @@ public:
 
     bool IsLineFull(int line);    // Check if a specific line on the board is full
 
-    Board(short unsigned int ID) : ID(ID), gameBoard(), currentShape(nullptr), shapeIsFalling(false) { printLocation = (ID == 1) ? GameConfig::MIN_X_BOARD_1 : GameConfig::MIN_X_BOARD_2; };     // Constructor for the Board class
+    Board(short unsigned int ID) : ID(ID), gameBoard(), currentTetromino(nullptr), tetrominoIsFalling(false) { printLocation = (ID == 1) ? GameConfig::MIN_X_BOARD_1 : GameConfig::MIN_X_BOARD_2; };     // Constructor for the Board class
 
     Board(const Board& b) = delete;
 
@@ -59,11 +59,11 @@ public:
 
 	bool isOverlapping(GameConfig::eKeys direction) const;     // Check if moving in a specific direction would cause the tetromino to overlap with occupied blocks
 
-    void printShape(char charOfShape = GameConfig::BLOCK);    // Print the current falling tetromino on the board with a specified character (default is a block character)
+    void printTetromino(char charOfTetromino = GameConfig::BLOCK);    // Print the current falling tetromino on the board with a specified character (default is a block character)
 
-    void moveCurrentShape(GameConfig::eKeys); //Returns true if shape has been placed
+    void moveCurrentTetromino(GameConfig::eKeys);       // Moves the current tetromino in the specified direction. If the tetromino has reached a stop, places it on the board
    
-    bool isShapeFalling() { return shapeIsFalling; }     // Check if a tetromino is currently falling
+    bool isTetrominoFalling() { return tetrominoIsFalling; }     // Check if a tetromino is currently falling
 
     void reset();    // Reset the game board and other parameters
 

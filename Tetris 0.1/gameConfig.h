@@ -16,7 +16,7 @@ public:
 
 	// Constants for block characters
 	static constexpr int BLOCK = 219; //The font for a block
-	static constexpr int EMPTYBOLCK = ' '; //The font for a block
+	static constexpr int EMPTYBOLCK = ' '; //The font for an empty space on the board
 
 	// Game board dimensions
 	static constexpr int GAME_WIDTH = 12;
