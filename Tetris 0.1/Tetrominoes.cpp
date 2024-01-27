@@ -38,6 +38,7 @@ Block* Tetrominoes::createRotation(int arr[4][4], int midX)
 Tetrominoes::Tetrominoes()
 {
     ShapeType shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
+    this->type = shapeType;
     currentRotation = 0;
     rotations = new Block* [MAX_SHAPE_ROTATIONS];
     switch (shapeType)
@@ -243,13 +244,13 @@ void Tetrominoes::moveLeft() {
 //Rotate the shape clockwise
 void Tetrominoes::rotateClockwise()
 {
-	this->currentRotation = ((this->currentRotation + 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
+    this->currentRotation = ((this->currentRotation + 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
 }
 
 //Rotate the shape counter-clockwise
 void Tetrominoes::rotateCounterClockwise()
 {
-	this->currentRotation = ((this->currentRotation - 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
+    this->currentRotation = ((this->currentRotation - 1) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
 }
 
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const

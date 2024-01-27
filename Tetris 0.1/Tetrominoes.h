@@ -44,7 +44,7 @@ private:
     Block** rotations;
     int currentRotation;
     int color;
-    ShapeType type; //Mostly for debugging
+    ShapeType type; 
 
 public:
     Tetrominoes();

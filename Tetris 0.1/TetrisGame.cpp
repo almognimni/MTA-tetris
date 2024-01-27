@@ -41,7 +41,7 @@ void TetrisGame::showMenu()
 		cout << "(1) Start a new game" << endl;
 		if (currrentState == PAUSED)
 			cout << "(2) Continue a paused game" << endl;
-		if (currrentState == NEW)
+			if (currrentState == NEW)
 		cout << "(3) Toggle colors" << endl;
 		cout << "(8) Present instructions and keys" << endl;
 		cout << "(9) EXIT" << endl;
@@ -71,12 +71,12 @@ void TetrisGame::showMenu()
 			currrentState = EXIT;
 			break;
 		case 3:
-			if (currrentState == NEW)
-			{
+		if (currrentState == NEW)
+		{
 			toggleColors();
 			valid = true; //To print the menu again with/without colors
 			break;
-			}
+		}
 		default:
 			valid = false;
 			break;
@@ -131,13 +131,14 @@ void TetrisGame::startGame()
 			Sleep(50);
 		}
 
-		// if the shape is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentShape)
 			p1.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
 			p2.myPlayerBoard.moveCurrentShape(GameConfig::eKeys::DROP);
+		// if the shape is still falling, lower it. else it will be placed and deleted (the deletion is in "placeTetromino" inside moveCurrentShape)
 		if (p1.myPlayerBoard.isShapeFalling() == false)
-			p1.myPlayerBoard.deleteFullLines(); //delete full lines if there are any
+			p1.myPlayerBoard.deleteFullLines();
+
 		if (p2.myPlayerBoard.isShapeFalling() == false)
-			p2.myPlayerBoard.deleteFullLines();
+			p2.myPlayerBoard.deleteFullLines();	//delete full lines if there are any
 	}
 	currrentState = POST;
 }
@@ -295,16 +296,6 @@ void TetrisGame::postGameScreen()
 
 void TetrisGame::toggleColors()
 {
-	/*
-	clrscr();
-	printColoredLogo();
-	int userChoiceColor;
-	cout << "\n";
-	cout << "(0) Press for game with black and white colors" << endl;
-	cout << "(1) Press for game with colors" << endl;
-	cout << "Enter your choice: ";
-	cin >> userChoiceColor;
-	*/
 	if (this->p1.myPlayerBoard.isColored())
 	{
 		this->p1.myPlayerBoard.setBoardColors(false);

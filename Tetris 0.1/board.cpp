@@ -34,7 +34,7 @@ void Board::makeLineFalse(int indexOfLineFromTop)
 		this->gameBoardColor[indexOfLineFromTop][i] = 0; //BLACK BACKGROUND
 	}
 }
-
+//first big 16 , second small 15
 void Board::swapLineBoardAndColor(int firstLineFromTop, int secondLineFromTop)
 {
 	int i = 0;
@@ -52,7 +52,9 @@ void Board::swapLineBoardAndColor(int firstLineFromTop, int secondLineFromTop)
 		this->gameBoardColor[firstLineFromTop][i] = this->gameBoardColor[secondLineFromTop][i];
 		this->gameBoardColor[secondLineFromTop][i] = tempColor;
 	}
-	printTheSwap(firstLineFromTop, secondLineFromTop);
+	//first smaill 15 , second big 16
+
+	printTheSwap(secondLineFromTop,firstLineFromTop);
 }
 //int from start and add min_x_Board   17_1
 void Board::clearLineChar(int indexOfLineFromTop)
@@ -60,41 +62,54 @@ void Board::clearLineChar(int indexOfLineFromTop)
     /* this code depned on what i get for location in the board - NEED TO DO
 	gotoxy(numOfLineFromTheBottom + GameConfig::MIN_X_BOARD_1)
 	*/
-	gotoxy(GameConfig::MIN_X_BOARD_1, GameConfig::MIN_Y_BOARD_1 + indexOfLineFromTop);
+
+	gotoxy(this->printLocation, GameConfig::MIN_Y_BOARD_1 + indexOfLineFromTop);
 	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
-		cout << ' ';
+		cout << (char)GameConfig::EMPTYBOLCK;
 	}
 }
+//first smaill 15 , second big 16
 void Board::printTheSwap(int firstLineFromTop, int secondLineFromTop)
 {	
+
+	gotoxy(this->printLocation, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
+	printLineInBoard(firstLineFromTop);
+	gotoxy(this->printLocation, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
+	printLineInBoard(secondLineFromTop);
+	/*
 	for (int i = 0; i < GameConfig::GAME_WIDTH; i++)
 	{
-		gotoxy(GameConfig::MIN_X_BOARD_1+i, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
+		gotoxy(this->printLocation, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
+		printLineInBoard(firstLineFromTop);
+
+		
+		gotoxy(this->printLocation +i, GameConfig::MIN_Y_BOARD_1 + firstLineFromTop);
 		if (this->gameBoard[firstLineFromTop][i] == true)
 		{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),GameConfig::COLORS[this->gameBoardColor[firstLineFromTop][i]]); //casting auto for char to int?
-			cout << (char)219;
+			cout << (char)GameConfig::BLOCK;
 		}
 		else
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
-			cout << ' ';
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
+			cout << (char)GameConfig::EMPTYBOLCK;
 		}
 
-			gotoxy(GameConfig::MIN_X_BOARD_1+i, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
+			gotoxy(this->printLocation +i, GameConfig::MIN_Y_BOARD_1 + secondLineFromTop);
 		if (this->gameBoard[secondLineFromTop][i] == true)
 		{
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[secondLineFromTop][i]]);//casting auto for char to int?
-			cout << (char)219;
+			cout << (char)GameConfig::BLOCK;
 		}
 		else
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
-			cout << ' ';
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
+			cout << (char)GameConfig::EMPTYBOLCK;
 		}
-
+		
 	}
+	*/
 }
 
 void Board::printBlockInBoard(Block curBlock) 
@@ -144,6 +159,7 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 	case GameConfig::eKeys::LEFT:
 		difX--;
 		break;
+
 	case GameConfig::eKeys::ROTATE_CLOCKWISE:
 		difRot++;
 		break;
@@ -168,16 +184,15 @@ bool Board::isOverlapping(GameConfig::eKeys direction) const
 
 void Board::printShape(char charOfShape)
 {
-	int currentShapeColor;
-	if (this->gameWithColors == false)
-		currentShapeColor = GameConfig::COLORS[0];
-	else
-		currentShapeColor = this->currentShape->getColor();
-	if (charOfShape == ' ')
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
-	else
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentShapeColor);
-	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
+	if (this->gameWithColors == true)
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->currentShape->getType() + 1]); //changed now 25/01
+
+	//if (charOfShape == (char)GameConfig::EMPTYBOLCK)
+	//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
+	//else
+	//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentShapeColor); //changed now 25/01
+
+		for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
@@ -201,7 +216,7 @@ void Board::placeTetromino()
 		int blockY = this->currentShape->GetBlockY(i);
 		this->gameBoard[blockY][blockX] = true;
 		if (this->gameWithColors == true) //maor new
-			this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
+			this->gameBoardColor[blockY][blockX] = (this->currentShape->getType() + 1);
 	}
 }
 
@@ -212,7 +227,7 @@ void Board::moveCurrentShape(GameConfig::eKeys direction)
 
 	if (this->isOverlapping(direction) == false)
 	{
-		this->printShape(' ');
+		this->printShape((char)GameConfig::EMPTYBOLCK);
 		switch (direction)
 		{
 		case GameConfig::eKeys::DROP:
@@ -233,7 +248,7 @@ void Board::moveCurrentShape(GameConfig::eKeys direction)
 			this->currentShape->rotateCounterClockwise();
 			break;
 		}
-		this->printShape((char)219);
+		this->printShape((char)GameConfig::BLOCK);
 	}
 
 	else if (direction == GameConfig::eKeys::DROP)
@@ -275,13 +290,14 @@ void Board::printLineInBoard(int line)
 	{
 		if (this->gameBoard[line][i] == true)
 		{
+			if(this->isColored()==true) //if game with color, choose the color
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[this->gameBoardColor[line][i]]);
-			cout << (char)219;
+			cout << (char)GameConfig::BLOCK;
 		}
 		else
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[0]);
-			cout << ' ';
+			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GameConfig::COLORS[8]);
+			cout << (char)GameConfig::EMPTYBOLCK;
 		}
 	}
 }

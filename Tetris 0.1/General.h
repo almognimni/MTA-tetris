@@ -7,9 +7,11 @@
 #include <ctime> // for rand seed
 #include <iostream>
 
+void gotoxy(int, int); // Function to set the cursor position in the console
 
-void gotoxy(int, int);
-void clrscr();
-void maximizeConsole();
+void clrscr();// Function to clear the console screen
 
-#endif // __GENERAL_H
+void maximizeConsole();// Function to maximize the console window to the screen size
+
+
+#endif 

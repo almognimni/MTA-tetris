@@ -14,13 +14,19 @@ public:
 	Board myPlayerBoard; // Check how to make private
 
 
-	Player(short unsigned int ID) : ID(ID), myPlayerBoard(ID), alive(true){};
-	Player(const Player& other) = delete;
-	bool isAlive() const { return alive; }
-	void killPlayer() { this->alive = false; }
-	void reset() { myPlayerBoard.reset(); alive = true; };
-	void handleInput(char key);
-	bool checkIfLost();
+	Player(short unsigned int ID) : ID(ID), myPlayerBoard(ID), alive(true){}; // Constructor for the Player class
+
+	Player(const Player& other) = delete; // Copy constructor is deleted to avoid unintended object copies
+
+	bool isAlive() const { return alive; } // Checks if the player is alive
+
+	void killPlayer() { this->alive = false; } // Sets the player as not alive
+
+	void reset() { myPlayerBoard.reset(); alive = true; }; // Resets the player Game, making the board empty and setting them as alive
+
+	void handleInput(char key);  // Handles receiving input for moving a shape to the player
+	
+	bool checkIfLost(); // Checks if the player has lost the game
 
 };
 
