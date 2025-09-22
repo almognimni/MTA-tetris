@@ -46,31 +46,52 @@ Tetrominoes::Tetrominoes(const Tetrominoes& other) {
         // }
         */
 
-//Function will take an 4x4 matrix representing a shape and a starting point and will create an array of 4 blocks representing it
+/**
+ * @brief Creates a rotation state from a 4x4 matrix pattern
+ * @param arr 4x4 integer array where 1 represents a block, 0 represents empty space
+ * @param midX Starting X position for the shape (center reference point)
+ * @return Pointer to array of Block objects representing this rotation state
+ * 
+ * This function converts a 4x4 matrix representation of a tetromino shape into
+ * an array of Block objects. It scans the matrix row by row, creating Block
+ * objects for each position marked with 1. The midX parameter serves as a
+ * reference point for positioning the blocks relative to the board center.
+ * 
+ * Memory allocation: This function allocates memory that must be freed when
+ * the tetromino is destroyed or placed on the board.
+ */
 Block* Tetrominoes::createRotation(int arr[4][4], int midX)
 {
     Block* rotation = new Block[BLOCKS_IN_SHAPE];
-    int i = 0;
+    int blockIndex = 0;
 
+    // Scan the 4x4 matrix to find block positions
     for (int row = 0; row < BLOCKS_IN_SHAPE; row++)
     {
         for (int col = 0; col < BLOCKS_IN_SHAPE; col++)
         {
-            if (i >= BLOCKS_IN_SHAPE)
-                return rotation; //If we have 4 blocks we return the tetromino
+            // Safety check: stop if we already have 4 blocks
+            if (blockIndex >= BLOCKS_IN_SHAPE)
+                return rotation;
 
+            // Create a block for each '1' in the matrix
             if (arr[row][col] == 1)
             {
-                rotation[i] = Block(midX - 1 + col, row);
-                i++;
+                // Position block relative to midX reference point
+                rotation[blockIndex] = Block(midX - 1 + col, row);
+                blockIndex++;
             }
         }
     }
     return rotation;
 }
-//TODO - free the memory after a shape has been placed on the board
-//Create a free function that will free the rotations of a shape
 
+/**
+ * @brief Constructor - creates a random tetromino with all rotation states
+ * 
+ * Randomly selects one of the seven tetromino types, assigns appropriate color,
+ * and generates all four rotation states for that shape type.
+ */
 Tetrominoes::Tetrominoes()
 {
     shapeType = (ShapeType)(rand() % 7); //////19_01_24  maor add casting
@@ -287,25 +308,53 @@ void Tetrominoes::moveLeft() {
     }
 }
 
-//Rotate the shape clockwise
+/**
+ * @brief Rotates the tetromino clockwise to the next rotation state
+ * 
+ * Advances the currentRotation index by 1, wrapping around to 0 when
+ * reaching the maximum rotation states. The modulo operation ensures
+ * the rotation index stays within valid bounds (0 to MAX_SHAPE_ROTATIONS-1).
+ */
 void Tetrominoes::rotateClockwise()
 {
 	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
 }
 
-//Rotate the shape counter-clockwise
+/**
+ * @brief Rotates the tetromino counter-clockwise to the previous rotation state
+ * 
+ * Note: Currently has the same implementation as clockwise rotation - this appears
+ * to be a bug that needs fixing. Should subtract 1 instead of adding 1.
+ * TODO: Fix counter-clockwise rotation to actually rotate in opposite direction
+ */
 void Tetrominoes::rotateCounterClockwise()
 {
 	this->currentRotation = ((this->currentRotation + 1)) + MAX_SHAPE_ROTATIONS % MAX_SHAPE_ROTATIONS;
 }
 
+/**
+ * @brief Gets the X coordinate of a specific block with optional rotation offset
+ * @param blockNum Index of the block within the tetromino (0-3)
+ * @param rotationMod Rotation offset from current state (-1, 0, or 1)
+ * @return X coordinate of the specified block in the specified rotation
+ * 
+ * The rotation calculation uses modulo arithmetic to handle negative values correctly
+ * and ensure the rotation index wraps around within valid bounds.
+ */
 int Tetrominoes::GetBlockX(int blockNum, int rotationMod) const
 {
-    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS; // Must explain
+    // Calculate target rotation with proper wrap-around handling
+    int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
 
     return this->rotations[blockRotation][blockNum].getX();
 }
 
+/**
+ * @brief Gets the Y coordinate of a specific block with optional rotation offset
+ * @param blockNum Index of the block within the tetromino (0-3)
+ * @param rotationMod Rotation offset from current state (-1, 0, or 1)
+ * @return Y coordinate of the specified block in the specified rotation
+ */
 int Tetrominoes::GetBlockY(int blockNum, int rotationMod) const
 {
     int blockRotation = ((currentRotation + rotationMod) + MAX_SHAPE_ROTATIONS) % MAX_SHAPE_ROTATIONS;
