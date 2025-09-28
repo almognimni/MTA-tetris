@@ -4,10 +4,21 @@
 using std::cout;
 using std::cin;
 
+/**
+ * @brief Deletes a completed line and shifts all lines above it downward
+ * @param indexOfLineFromTop Zero-based index of the line to delete from the top
+ * 
+ * This function implements the core Tetris line-clearing mechanic:
+ * 1. Clears the visual representation of the line
+ * 2. Sets all positions in the line to false (empty)
+ * 3. Shifts all lines above the deleted line down by one position
+ */
 void Board::deleteLine(int indexOfLineFromTop)
 {
-	clearLineChar(indexOfLineFromTop);
-	makeLineFalse(indexOfLineFromTop);
+	clearLineChar(indexOfLineFromTop);           // Clear visual display
+	makeLineFalse(indexOfLineFromTop);           // Mark line as empty
+	
+	// Shift all lines above the deleted line downward
 	while (indexOfLineFromTop >= 1)
 	{
 		swapLineBoardAndColor(indexOfLineFromTop, indexOfLineFromTop - 1);
@@ -15,16 +26,27 @@ void Board::deleteLine(int indexOfLineFromTop)
 	}
 }
 
+/**
+ * @brief Checks if a horizontal line is completely filled with blocks
+ * @param line Zero-based line index from the top of the board
+ * @return true if the line is completely filled, false otherwise
+ */
 bool Board::IsLineFull(int line)
 {
-	int j;
-	for ( j = 0; j < GameConfig::GAME_WIDTH; j++)
-	{					//Y,X
-		if (this->gameBoard[line][j] == 0)
+	// Check every column in the specified line
+	for (int col = 0; col < GameConfig::GAME_WIDTH; col++)
+	{
+		// If any position is empty (false), the line is not full
+		if (this->gameBoard[line][col] == 0)
 			return false;
 	}
-	return true;
+	return true; // All positions are occupied
 }
+
+/**
+ * @brief Clears all blocks from a line (sets all positions to false/empty)
+ * @param indexOfLineFromTop Zero-based line index from the top
+ */
 void Board::makeLineFalse(int indexOfLineFromTop)
 {
 	int i = 0;
@@ -189,13 +211,26 @@ void Board::generateTetromino() //consider a differant approch where we don't al
 	this->shapeIsFalling = true;
 }
 
+/**
+ * @brief Permanently places the current tetromino onto the game board
+ * 
+ * This function transfers the current falling tetromino from its temporary
+ * falling state to permanent placement on the board. Each block of the 
+ * tetromino is marked as occupied in the gameBoard array and its color
+ * information is stored in the gameBoardColor array for rendering.
+ */
 void Board::placeTetromino()
 {
+	// Place each block of the current tetromino on the board
 	for (int i = 0; i < BLOCKS_IN_SHAPE; i++)
 	{
 		int blockX = this->currentShape->GetBlockX(i);
 		int blockY = this->currentShape->GetBlockY(i);
+		
+		// Mark position as occupied
 		this->gameBoard[blockY][blockX] = true;
+		
+		// Store color information for rendering (shape type + 1 to avoid 0)
 		this->gameBoardColor[blockY][blockX] = char(this->currentShape->getType() + 1);
 	}
 }
